@@ -10,47 +10,50 @@ import {
   NavWalletButton,
   MobileNavWrapper,
   NavHamburgerButton,
+  NavIcon,
 } from './NavBarContent';
-
-interface Props {
-  toggleModal: void;
-}
+import { NavPage } from '../types';
 
 export function NavBarContent<Props>({ toggleModal }) {
   const handleHamburgerClick = () => {
     toggleModal();
   };
 
+  const pages: NavPage[] = [
+    {
+      url: '#',
+      name: 'Dashboard',
+      alt: 'Dashboard Page',
+      icon: <UilHome />,
+    },
+    {
+      url: '#',
+      name: 'Swap',
+      alt: 'Swap Page',
+      icon: <UilUsdCircle />,
+    },
+    {
+      url: '#',
+      name: 'Analytics',
+      alt: 'Analytics Page',
+      icon: <UilAnalytics />,
+    },
+  ];
+
   return (
     <>
       <NavWrapper>
-        <NavItem
-          href="#"
-          target="_blank"
-          title="Dashboard Page"
-          rel="noopener noreferrer"
-        >
-          <UilHome size="25" style={{ paddingRight: '5px' }} />
-          Dashboard
-        </NavItem>
-        <NavItem
-          href="#"
-          target="_blank"
-          title="Swap Page"
-          rel="noopener noreferrer"
-        >
-          <UilUsdCircle size="25" style={{ paddingRight: '5px' }} />
-          Swap
-        </NavItem>
-        <NavItem
-          href="#"
-          target="_blank"
-          title="Analytics Page"
-          rel="noopener noreferrer"
-        >
-          <UilAnalytics size="25" style={{ paddingRight: '5px' }} />
-          Analytics
-        </NavItem>
+        {pages.map(page => (
+          <NavItem
+            href={page.url}
+            target="_blank"
+            title={page.alt}
+            rel="noopener noreferrer"
+          >
+            <NavIcon>{page.icon}</NavIcon>
+            {page.name}
+          </NavItem>
+        ))}
         <NavWalletButton>Connect Wallet</NavWalletButton>
       </NavWrapper>
       <MobileNavWrapper>

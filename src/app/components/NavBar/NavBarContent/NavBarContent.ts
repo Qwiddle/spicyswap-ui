@@ -2,6 +2,12 @@ import styled from 'styled-components';
 import { A } from 'app/components/A';
 import { ConnectButton } from 'app/components/ConnectButton';
 import { media } from 'styles/media';
+import {
+  UilAnalytics,
+  UilUsdCircle,
+  UilHome,
+  UilBars,
+} from '@iconscout/react-unicons';
 
 export const NavWrapper = styled.nav`
   display: none;
@@ -42,4 +48,8 @@ export const NavWalletButton = styled(ConnectButton)`
 
 export const NavHamburgerButton = styled(ConnectButton)`
   padding: 0 1rem;
+`;
+
+export const NavIcon = styled.span`
+  padding-right: 5px;
 `;

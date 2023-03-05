@@ -33,11 +33,7 @@ export const MobileNavItem = styled(A)`
   font-size: 1.4rem;
   font-weight: 500;
   align-items: center;
-
-  .icon {
-    margin-right: 0.25rem;
-    width: 22px;
-  }
+  gap: 5px;
 
   :last-of-type {
     margin-top: auto;

@@ -14,6 +14,7 @@ import {
   P,
   RpcStatus,
 } from './MobileNav';
+import { NavPage } from './types';
 
 interface Props {
   toggleModal: void;
@@ -24,6 +25,33 @@ export function MobileNav<Props>({ toggleModal }) {
     toggleModal();
   };
 
+  const pages: NavPage[] = [
+    {
+      url: '#',
+      name: 'dashboard',
+      alt: '',
+      icon: <UilHome />,
+    },
+    {
+      url: '#',
+      name: 'swap',
+      alt: '',
+      icon: <UilUsdCircle />,
+    },
+    {
+      url: '#',
+      name: 'analytics',
+      alt: '',
+      icon: <UilAnalytics />,
+    },
+    {
+      url: '#',
+      name: 'learn',
+      alt: '',
+      icon: <UilNotebooks />,
+    },
+  ];
+
   return (
     <MobileNavWrapper
       onClick={e => {
@@ -31,22 +59,16 @@ export function MobileNav<Props>({ toggleModal }) {
       }}
     >
       <MobileNavCloseIcon onClick={handleMobileNavClose} />
-      <MobileNavItem href="#" target="_blank" rel="noopener noreferrer">
-        <UilHome size="20" className="icon" />
-        dashboard
-      </MobileNavItem>
-      <MobileNavItem href="#" target="_blank" rel="noopener noreferrer">
-        <UilUsdCircle size="25" className="icon" />
-        swap
-      </MobileNavItem>
-      <MobileNavItem href="#" target="_blank" rel="noopener noreferrer">
-        <UilAnalytics size="25" className="icon" />
-        analytics
-      </MobileNavItem>
-      <MobileNavItem href="#" target="_blank" rel="noopener noreferrer">
-        <UilNotebooks size="25" className="icon" />
-        learn
-      </MobileNavItem>
+      {pages.map(page => (
+        <MobileNavItem
+          href={page.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {page.icon}
+          {page.name}
+        </MobileNavItem>
+      ))}
       <MobileNavItem>
         <MobileNavWalletButton>Connect Wallet</MobileNavWalletButton>
       </MobileNavItem>
