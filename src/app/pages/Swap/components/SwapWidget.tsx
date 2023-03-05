@@ -3,7 +3,6 @@ import { UilSlidersVAlt } from '@iconscout/react-unicons';
 import { UilSync } from '@iconscout/react-unicons';
 import styled from 'styled-components';
 import { A } from 'app/components/A';
-import { SwapSelectorModal } from './SwapSelectorModal';
 import { useState } from 'react';
 import { useSpicySwapSlice } from '../slice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +14,7 @@ import {
 } from '../slice/selectors';
 import { SwapDirection, SwapPair } from 'types/Swap';
 import { SwapAssetSelection } from './SwapSelection';
+import { SwapTokenList } from './SwapTokenList';
 
 export function SwapWidget() {
   const { actions } = useSpicySwapSlice();
@@ -99,7 +99,7 @@ export function SwapWidget() {
           </PriceImpact>
         </SwapSubsection>
       </Wrapper>
-      <SwapSelectorModal
+      <SwapTokenList
         modalView={modalView}
         toggleModal={toggleModal}
         tokens={tokens}
