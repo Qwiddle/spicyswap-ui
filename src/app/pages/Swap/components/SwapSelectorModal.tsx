@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { UilSearch, UilArrowLeft, UilCog } from '@iconscout/react-unicons';
 import { A } from 'app/components/A';
-import { SwapInput } from './SwapSelector';
+import { SwapSelectionAmountInput } from './SwapSelection/SwapSelection';
 import { SpicyToken } from 'types/SpicyToken';
 import { SwapTokenIcon } from './SwapTokenIcon';
 import { ChangeEvent, useState } from 'react';
@@ -143,7 +143,7 @@ export const SwapSelectionSearchIcon = styled(UilSearch)`
   margin-left: 10px;
 `;
 
-const SwapAssetInput = styled(SwapInput)`
+const SwapAssetInput = styled(SwapSelectionAmountInput)`
   background-color: ${p => p.theme.background};
   font-size: 16px;
   text-align: left;

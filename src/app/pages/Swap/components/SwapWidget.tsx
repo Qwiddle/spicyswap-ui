@@ -3,7 +3,6 @@ import { UilSlidersVAlt } from '@iconscout/react-unicons';
 import { UilSync } from '@iconscout/react-unicons';
 import styled from 'styled-components';
 import { A } from 'app/components/A';
-import { SwapSelector } from './SwapSelector';
 import { SwapSelectorModal } from './SwapSelectorModal';
 import { useState } from 'react';
 import { useSpicySwapSlice } from '../slice';
@@ -15,6 +14,7 @@ import {
   selectPair,
 } from '../slice/selectors';
 import { SwapDirection, SwapPair } from 'types/Swap';
+import { SwapAssetSelection } from './SwapSelection';
 
 export function SwapWidget() {
   const { actions } = useSpicySwapSlice();
@@ -78,7 +78,7 @@ export function SwapWidget() {
             <P3 style={{ fontSize: '16px' }}>Liquidity</P3>
           </Tabs>
           <Swap>
-            <SwapSelector toggleModal={toggleModal} pair={pair} />
+            <SwapAssetSelection toggleModal={toggleModal} pair={pair} />
           </Swap>
           <Execute>
             <ConnectButton>Connect</ConnectButton>
