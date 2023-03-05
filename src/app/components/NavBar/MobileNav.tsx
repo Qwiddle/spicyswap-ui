@@ -8,7 +8,7 @@ import {
   UilNotebooks,
   UilMultiply,
 } from '@iconscout/react-unicons';
-import { ConnectButton } from 'app/pages/Swap/components/SwapWidget';
+import { ConnectButton } from '../ConnectButton';
 import { OnlineIndicator } from '../OnlineIndicator';
 
 interface Props {

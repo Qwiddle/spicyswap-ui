@@ -3,15 +3,12 @@ import styled from 'styled-components/macro';
 import {
   UilAnalytics,
   UilUsdCircle,
-  UilMoneyInsert,
   UilHome,
-  UilTrowel,
   UilBars,
 } from '@iconscout/react-unicons';
 import { A } from '../A';
-import { ConnectButton } from 'app/pages/Swap/components/SwapWidget';
+import { ConnectButton } from '../ConnectButton';
 import { media } from 'styles/media';
-import { Modal } from '../Modal';
 
 interface Props {
   modalView: boolean;
