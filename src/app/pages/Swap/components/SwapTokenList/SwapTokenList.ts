@@ -3,23 +3,6 @@ import { SwapSelectionAmountInput } from '../SwapSelection/SwapSelection';
 import { UilSearch } from '@iconscout/react-unicons';
 import { A } from 'app/components/A';
 
-interface SwapSelectionModalProps {
-  show: boolean;
-}
-
-export const SwapTokenListModal = styled.div<SwapSelectionModalProps>`
-  display: ${({ show }) => (show ? 'flex' : 'none')};
-  position: fixed;
-  z-index: 1000;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.5);
-`;
-
 export const SwapTokenListBox = styled.div`
   display: grid;
   background-color: ${p => p.theme.primary};

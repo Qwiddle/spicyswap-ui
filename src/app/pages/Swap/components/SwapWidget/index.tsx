@@ -31,6 +31,7 @@ import {
   Tabs,
   Wrapper,
 } from './SwapWidget';
+import { Modal } from 'app/components/Modal';
 
 export function SwapWidget() {
   const { actions } = useSpicySwapSlice();
@@ -44,7 +45,7 @@ export function SwapWidget() {
   const error = useSelector(selectError);
   const pair = useSelector(selectPair);
 
-  const toggleModal = (dir: SwapDirection) => {
+  const toggleModal = (dir?: SwapDirection) => {
     if (dir) activeSwapDir.current = dir;
     setModalView(!modalView);
   };
@@ -110,12 +111,18 @@ export function SwapWidget() {
           </PriceImpact>
         </SwapSubsection>
       </Wrapper>
-      <SwapTokenList
-        modalView={modalView}
-        toggleModal={toggleModal}
-        tokens={tokens}
-        setPair={setPair}
-      />
+      <Modal
+        show={modalView}
+        onClick={() => {
+          toggleModal();
+        }}
+      >
+        <SwapTokenList
+          toggleModal={toggleModal}
+          tokens={tokens}
+          setPair={setPair}
+        />
+      </Modal>
     </>
   );
 }

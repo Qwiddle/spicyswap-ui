@@ -11,7 +11,6 @@ import {
   SwapTokenListHeader,
   SwapTokenListHeaderIcon,
   SwapTokenListItem,
-  SwapTokenListModal,
   SwapTokenListSearch,
   SwapTokenListSearchIcon,
   SwapTokenListSearchInput,
@@ -19,14 +18,12 @@ import {
 import { P, P2 } from 'app/components/P';
 
 interface SwapTokenListProps {
-  modalView: boolean;
   toggleModal: void;
   tokens: SpicyToken[];
   setPair: void;
 }
 
 export function SwapTokenList<SwapTokenListProps>({
-  modalView,
   toggleModal,
   tokens,
   setPair,
@@ -53,39 +50,37 @@ export function SwapTokenList<SwapTokenListProps>({
   };
 
   return (
-    <SwapTokenListModal show={modalView} onClick={toggleModal}>
-      <SwapTokenListBox onClick={stopPropagation}>
-        <SwapTokenListHeader>
-          <SwapTokenListHeaderIcon onClick={toggleModal}>
-            <UilArrowLeft size="34" />
-          </SwapTokenListHeaderIcon>
-          <P style={{ fontSize: '18px' }}>Token Selection</P>
-          <SwapTokenListHeaderIcon>
-            <UilCog size="24" style={{ margin: '0 5px' }} />
-          </SwapTokenListHeaderIcon>
-        </SwapTokenListHeader>
-        <SwapTokenListSearch>
-          <SwapTokenListSearchIcon size="22" />
-          <SwapTokenListSearchInput
-            placeholder="Search token by name"
-            onChange={handleSwapSearchInputChange}
-          />
-        </SwapTokenListSearch>
-        <SwapTokenListContent>
-          {tokens.filter(trimTokenListByInput).map(token => (
-            <SwapTokenListItem onClick={() => handleTokenClick(token)}>
-              <SwapTokenIcon url={token.img} />
-              <SwapTokenListAssetText>
-                <P>{token.name}</P>
-                <P2>{token.symbol}</P2>
-              </SwapTokenListAssetText>
-              <SwapTokenListAssetBalance>
-                <P>$ {token.derivedUsd.toFixed(2)}</P>
-              </SwapTokenListAssetBalance>
-            </SwapTokenListItem>
-          ))}
-        </SwapTokenListContent>
-      </SwapTokenListBox>
-    </SwapTokenListModal>
+    <SwapTokenListBox onClick={stopPropagation}>
+      <SwapTokenListHeader>
+        <SwapTokenListHeaderIcon onClick={toggleModal}>
+          <UilArrowLeft size="34" />
+        </SwapTokenListHeaderIcon>
+        <P style={{ fontSize: '18px' }}>Token Selection</P>
+        <SwapTokenListHeaderIcon>
+          <UilCog size="24" style={{ margin: '0 5px' }} />
+        </SwapTokenListHeaderIcon>
+      </SwapTokenListHeader>
+      <SwapTokenListSearch>
+        <SwapTokenListSearchIcon size="22" />
+        <SwapTokenListSearchInput
+          placeholder="Search token by name"
+          onChange={handleSwapSearchInputChange}
+        />
+      </SwapTokenListSearch>
+      <SwapTokenListContent>
+        {tokens.filter(trimTokenListByInput).map(token => (
+          <SwapTokenListItem onClick={() => handleTokenClick(token)}>
+            <SwapTokenIcon url={token.img} />
+            <SwapTokenListAssetText>
+              <P>{token.name}</P>
+              <P2>{token.symbol}</P2>
+            </SwapTokenListAssetText>
+            <SwapTokenListAssetBalance>
+              <P>$ {token.derivedUsd.toFixed(2)}</P>
+            </SwapTokenListAssetBalance>
+          </SwapTokenListItem>
+        ))}
+      </SwapTokenListContent>
+    </SwapTokenListBox>
   );
 }
