@@ -60,6 +60,8 @@ export default function PoolChart({
     pool = getPoolByTags(pools, pair?.from?.tag, pair?.to?.tag);
   }
 
+  console.log(metrics);
+
   if (!active || !pool) {
     return null;
   }
@@ -112,7 +114,7 @@ export default function PoolChart({
           ready={Boolean(pair)}
           customPlaceholder={<PoolChartPlaceholder />}
         >
-          {renderLineChart(theme)}
+          {renderLineChart(theme, metrics)}
         </ReactPlaceholder>
       </PoolChartBox>
       <PoolChartFooter>
@@ -126,99 +128,12 @@ export default function PoolChart({
   );
 }
 
-const data = [
-  {
-    name: '02/07',
-    price: 6.9,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '02/28',
-    price: 6.5,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '03/01',
-    price: 6.0,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '03/02',
-    price: 1.7,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '03/03',
-    price: 1.6,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '03/04',
-    price: 1.5,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '03/05',
-    price: 1.0,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '03/06',
-    price: 4.0,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '03/07',
-    price: 3.0,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: '03/08',
-    price: 2.0,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: '03/09',
-    price: 2.78,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: '03/10',
-    price: 1.89,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: '03/11',
-    price: 2.39,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: '03/12',
-    price: 3.49,
-    pv: 4300,
-    amt: 2100,
-  },
-];
-
-const renderLineChart = (theme: Theme) => (
+const renderLineChart = (theme: Theme, metrics) => (
   <ResponsiveContainer width="100%" height="100%">
     <AreaChart
       width={500}
       height={400}
-      data={data}
+      data={metrics}
       margin={{
         top: 5,
         right: 20,
@@ -226,7 +141,7 @@ const renderLineChart = (theme: Theme) => (
         bottom: 5,
       }}
     >
-      <XAxis dataKey="name" dy={10} stroke={theme.textSecondary} />
+      <XAxis dataKey="day" dy={10} stroke={theme.textSecondary} />
       <YAxis
         dx={-5}
         tickFormatter={value => `$${value.toFixed(2)}`}
@@ -245,7 +160,7 @@ const renderLineChart = (theme: Theme) => (
       />
       <Area
         type="monotone"
-        dataKey="price"
+        dataKey="volumeXtz"
         stroke={theme.backgroundVariant.replace(
           /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
           'rgba$1,1.5)',
