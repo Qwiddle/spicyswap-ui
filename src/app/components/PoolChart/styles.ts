@@ -85,9 +85,10 @@ export const PoolChartHeaderOptions = styled.div`
 export const PoolChartStatistic = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 90px;
+  max-width: 100px;
   align-items: center;
   justify-content: center;
+  padding: 2px;
 `;
 
 export const PoolChart = styled.div`

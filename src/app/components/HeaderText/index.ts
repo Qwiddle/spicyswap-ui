@@ -11,7 +11,7 @@ type SubHeaderTextProps = {
 export const HeaderText = styled.p`
   color: ${p => p.theme.textSecondary};
   font-weight: 500;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   margin: 0;
 `;
 
@@ -21,7 +21,7 @@ export const SubHeaderText = styled.p<SubHeaderTextProps>`
   gap: 2px;
   color: ${p => p.theme.textSecondary};
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.95rem;
   margin: 0;
 
   &.active {
@@ -39,6 +39,6 @@ export const SubHeaderTextColor = styled.p<SubHeaderTextColorProps>`
   gap: 2px;
   color: ${({ up }) => (up ? p => p.theme.text : '#fc0303')};
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.95rem;
   margin: 0;
 `;
