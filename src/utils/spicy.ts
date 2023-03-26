@@ -1,3 +1,4 @@
+import { SpicyPool } from 'types/SpicyPool';
 import { SpicyToken } from 'types/SpicyToken';
 
 /**
@@ -29,24 +30,21 @@ export const calculateHourAgg = () => {
  * example FA1.2 Tag: 'KT1K9gCRgaLRFKTErYt1wVxA3Frb9FjasjTV:null'
  * @returns SpicyToken;
  */
-export const getTokenByTag = (tokens: SpicyToken[], tag: string) => {
-  return tokens.find(t => t.tag === tag);
-};
+export const getTokenByTag = (tokens: SpicyToken[], tag: string) =>
+  tokens.find(t => t.tag === tag);
 
 // calculate APR for a given pool
-export const calculateLPAprXtz = ({ volume, reserve }) => {
-  const apr = ((volume * 0.002) / reserve) * 365 * 100;
-
-  console.log('APR LP', { apr });
-
-  return apr;
-};
+export const calculateLPAprXtz = ({ volume, reserve }) =>
+  ((volume * 0.002) / reserve) * 365 * 100;
 
 // calculate APR for a given pool
-export const calculateFarmAprXtz = ({ volume, staked }) => {
-  const apr = ((volume * 0.001) / staked) * 365 * 100;
+export const calculateFarmAprXtz = ({ volume, staked }) =>
+  ((volume * 0.001) / staked) * 365 * 100;
 
-  console.log('APR Farm', { apr });
-
-  return apr;
-};
+// find pool by tag in from token and to token
+export const getPoolByTags = (pools: SpicyPool[], fromTag, toTag) =>
+  pools?.find(
+    pool =>
+      (pool.fromToken.tag === fromTag || pool.fromToken.tag === toTag) &&
+      (pool.toToken.tag === fromTag || pool.toToken.tag === toTag),
+  );
