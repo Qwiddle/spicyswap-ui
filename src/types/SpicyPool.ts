@@ -9,6 +9,8 @@ export interface SpicyPool {
   totalReserveXtz: number;
   totalReserveUsd: number;
   txCount: number;
+  lpApr: number;
+  farmApr: number;
 }
 
 export interface SpicyPoolToken {

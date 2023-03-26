@@ -25,24 +25,16 @@ import {
 } from './styles';
 import { TimeSelectOption } from '../../common/types';
 import { useState } from 'react';
-import { SpicyToken } from 'types/SpicyToken';
-import { SwapPair, SwapDirection } from 'types/Swap';
 import ReactPlaceholder from 'react-placeholder/lib';
 import 'react-placeholder/lib/reactPlaceholder.css';
 import { useTheme } from 'styled-components';
 import { Theme } from 'styles/theme/themes';
-
-type PoolChartProps = {
-  tokens?: SpicyToken[];
-  pair?: SwapPair;
-  setPair: (token: SpicyToken) => void;
-  modalView: boolean;
-  toggleModal: (dir?: SwapDirection) => void;
-  active: boolean;
-};
+import { PoolChartProps } from './types';
+import { numberToLocaleAndFix } from 'utils/helper';
 
 export default function PoolChart({
   tokens,
+  pools,
   pair,
   setPair,
   modalView,
@@ -60,7 +52,17 @@ export default function PoolChart({
   const handleTabChange = (tab: TimeSelectOption) =>
     setActiveTab(timeSelectOptions.indexOf(tab));
 
-  if (!active) {
+  const pool = pools?.find(
+    pool =>
+      (pool.fromToken.tag === pair?.from?.tag ||
+        pool.fromToken.tag === pair?.to?.tag) &&
+      (pool.toToken.tag === pair?.from?.tag ||
+        pool.toToken.tag === pair?.to?.tag),
+  );
+
+  console.log(pool);
+
+  if (!active || !pool) {
     return null;
   }
 
@@ -76,7 +78,7 @@ export default function PoolChart({
               {`${pair?.from?.symbol}/${pair?.to?.symbol}`}
             </HeaderText>
             <HeaderPriceContainer>
-              <SubHeaderText>0.021 {pair?.from?.symbol}</SubHeaderText>
+              <SubHeaderText>{pair?.from?.symbol}</SubHeaderText>
               <SubHeaderTextColor up={true}>+0.00%</SubHeaderTextColor>
             </HeaderPriceContainer>
           </ReactPlaceholder>
@@ -85,15 +87,21 @@ export default function PoolChart({
           <PoolChartTimeSelection>
             <PoolChartStatistic>
               <SubHeaderTextColor up={true}>TVL</SubHeaderTextColor>
-              <SubHeaderText>217.93</SubHeaderText>
+              <SubHeaderText>
+                {numberToLocaleAndFix(pool?.totalReserveXtz, 2)} ꜩ
+              </SubHeaderText>
             </PoolChartStatistic>
             <PoolChartStatistic>
               <SubHeaderTextColor up={true}>APR</SubHeaderTextColor>
-              <SubHeaderText>2.818%</SubHeaderText>
+              <SubHeaderText>
+                {numberToLocaleAndFix(pool.lpApr, 2)}%
+              </SubHeaderText>
             </PoolChartStatistic>
             <PoolChartStatistic>
               <SubHeaderTextColor up={true}>spAPR 🌶️</SubHeaderTextColor>
-              <SubHeaderText>0.612%</SubHeaderText>
+              <SubHeaderText>
+                {numberToLocaleAndFix(pool.farmApr, 2)}%
+              </SubHeaderText>
             </PoolChartStatistic>
           </PoolChartTimeSelection>
           <ButtonGroup>
