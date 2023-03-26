@@ -1,5 +1,6 @@
 import { SpicyPool } from 'types/SpicyPool';
 import { SpicyToken } from 'types/SpicyToken';
+import { numberToLocaleAndFix } from './helper';
 
 /**
  * calculates an aggregate value for the day based on the current time.
@@ -48,3 +49,6 @@ export const getPoolByTags = (pools: SpicyPool[], fromTag, toTag) =>
       (pool.fromToken.tag === fromTag || pool.fromToken.tag === toTag) &&
       (pool.toToken.tag === fromTag || pool.toToken.tag === toTag),
   );
+
+export const calculateRate = ({ reserveFrom, reserveTo }) =>
+  numberToLocaleAndFix(reserveFrom / reserveTo, 4);

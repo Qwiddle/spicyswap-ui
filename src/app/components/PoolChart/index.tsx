@@ -24,15 +24,16 @@ import {
   QuestionMarkIconSmall,
 } from './styles';
 import { TimeSelectOption } from '../../common/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactPlaceholder from 'react-placeholder/lib';
 import 'react-placeholder/lib/reactPlaceholder.css';
 import { useTheme } from 'styled-components';
 import { Theme } from 'styles/theme/themes';
 import { PoolChartProps } from './types';
 import { numberToLocaleAndFix } from 'utils/helper';
-import { getPoolByTags } from 'utils/spicy';
-import { SpicyPool } from 'types/SpicyPool';
+import { calculateRate, getPoolByTags } from 'utils/spicy';
+import { SpicyPool, SpicyPoolMetric } from 'types/SpicyPool';
+import { CategoricalChartFunc } from 'recharts/types/chart/generateCategoricalChart';
 
 export default function PoolChart({
   tokens,
@@ -46,6 +47,8 @@ export default function PoolChart({
 }: PoolChartProps) {
   const theme = useTheme();
   const [activeTab, setActiveTab] = useState(0);
+  const [poolDynamicValue, setPoolDynamicValue] = useState('');
+  const [initialPoolValue, setInitialPoolValue] = useState('');
 
   const timeSelectOptions = Object.values(TimeSelectOption);
 
@@ -61,9 +64,28 @@ export default function PoolChart({
     pool = getPoolByTags(pools, pair?.from?.tag, pair?.to?.tag);
   }
 
-  const calculateRate = ({ reserveFrom, reserveTo }) => {
-    return numberToLocaleAndFix(reserveFrom / reserveTo, 4);
+  const handleChartHover: CategoricalChartFunc = (e: any) => {
+    if (!e.activePayload[0]) return;
+    setPoolDynamicValue(
+      numberToLocaleAndFix(e.activePayload[0].payload.price, 4),
+    );
   };
+
+  const handleChartLeave: CategoricalChartFunc = (e: any) => {
+    setPoolDynamicValue(initialPoolValue);
+  };
+
+  useEffect(() => {
+    if (pool) {
+      const rate = calculateRate({
+        reserveFrom: pool.fromToken.reserve,
+        reserveTo: pool.toToken.reserve,
+      });
+
+      setPoolDynamicValue(rate);
+      setInitialPoolValue(rate);
+    }
+  }, [pool]);
 
   if (!active || !pool) {
     return null;
@@ -82,10 +104,7 @@ export default function PoolChart({
             </HeaderText>
             <HeaderPriceContainer>
               <SubHeaderText>
-                {calculateRate({
-                  reserveFrom: pool.fromToken.reserve,
-                  reserveTo: pool.toToken.reserve,
-                })}
+                {poolDynamicValue}
                 &nbsp;{`${pair?.from?.symbol}`}
               </SubHeaderText>
               <SubHeaderTextColor up={true}>
@@ -111,7 +130,7 @@ export default function PoolChart({
             <PoolChartStatistic>
               <SubHeaderText>spAPR</SubHeaderText>
               <SubHeaderTextColor up={true}>
-                {numberToLocaleAndFix(pool.farmApr, 2)}% 🌶️
+                {numberToLocaleAndFix(pool.farmApr, 4)}%
               </SubHeaderTextColor>
             </PoolChartStatistic>
           </PoolChartTimeSelection>
@@ -125,7 +144,7 @@ export default function PoolChart({
           ready={Boolean(pair)}
           customPlaceholder={<PoolChartPlaceholder />}
         >
-          {renderLineChart(theme, metrics)}
+          {renderLineChart(theme, handleChartHover, handleChartLeave, metrics)}
         </ReactPlaceholder>
       </PoolChartBox>
       <PoolChartFooter>
@@ -139,7 +158,12 @@ export default function PoolChart({
   );
 }
 
-const renderLineChart = (theme: Theme, metrics) =>
+const renderLineChart = (
+  theme: Theme,
+  handleChartHover: CategoricalChartFunc,
+  handleChartLeave: CategoricalChartFunc,
+  metrics?: SpicyPoolMetric[] | null,
+) =>
   metrics && (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart
@@ -151,22 +175,19 @@ const renderLineChart = (theme: Theme, metrics) =>
           right: 20,
           left: 10,
         }}
+        onMouseMove={handleChartHover}
+        onMouseLeave={handleChartLeave}
       >
         <XAxis dataKey="day" dy={10} stroke={theme.textSecondary} />
         <YAxis
           dx={-2}
-          tickFormatter={value => `$${value.toFixed(2)}`}
+          tickFormatter={value => `${value.toFixed(2)}ꜩ`}
           allowDecimals={true}
           stroke={theme.textSecondary}
         />
         <Tooltip
-          labelStyle={{ color: theme.textSecondary }}
           contentStyle={{
-            backgroundColor: theme.background.replace(
-              /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
-              'rgba$1,0.4)',
-            ),
-            borderRadius: 3,
+            display: 'none',
           }}
         />
         <Area
