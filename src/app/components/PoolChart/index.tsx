@@ -31,10 +31,12 @@ import { useTheme } from 'styled-components';
 import { Theme } from 'styles/theme/themes';
 import { PoolChartProps } from './types';
 import { numberToLocaleAndFix } from 'utils/helper';
+import { getPoolByTags } from 'utils/spicy';
 
 export default function PoolChart({
   tokens,
   pools,
+  metrics,
   pair,
   setPair,
   modalView,
@@ -52,15 +54,11 @@ export default function PoolChart({
   const handleTabChange = (tab: TimeSelectOption) =>
     setActiveTab(timeSelectOptions.indexOf(tab));
 
-  const pool = pools?.find(
-    pool =>
-      (pool.fromToken.tag === pair?.from?.tag ||
-        pool.fromToken.tag === pair?.to?.tag) &&
-      (pool.toToken.tag === pair?.from?.tag ||
-        pool.toToken.tag === pair?.to?.tag),
-  );
+  let pool;
 
-  console.log(pool);
+  if (pools) {
+    pool = getPoolByTags(pools, pair?.from?.tag, pair?.to?.tag);
+  }
 
   if (!active || !pool) {
     return null;

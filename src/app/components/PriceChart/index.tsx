@@ -32,6 +32,7 @@ import { PriceChartProps } from './types';
 export default function PriceChart({
   tokens,
   pools,
+  metrics,
   pair,
   setPair,
   modalView,
