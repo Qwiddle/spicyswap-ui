@@ -41,8 +41,6 @@ export function Swap() {
   const error = useSelector(selectError);
   const pair = useSelector(selectPair);
 
-  console.log(pools, tokens);
-
   const [modalView, setModalView] = useState(false);
   const [limitView, setLimitView] = useState(false);
   const [poolView, setPoolView] = useState(false);
@@ -120,6 +118,7 @@ export function Swap() {
         <Content>
           <PriceChart
             tokens={tokens}
+            pools={pools}
             pair={pair}
             setPair={setPair}
             modalView={modalView}
@@ -128,6 +127,7 @@ export function Swap() {
           />
           <PoolChart
             tokens={tokens}
+            pools={pools}
             pair={pair}
             setPair={setPair}
             modalView={modalView}
