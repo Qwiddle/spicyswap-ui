@@ -32,6 +32,7 @@ import { Theme } from 'styles/theme/themes';
 import { PoolChartProps } from './types';
 import { numberToLocaleAndFix } from 'utils/helper';
 import { getPoolByTags } from 'utils/spicy';
+import { SpicyPool } from 'types/SpicyPool';
 
 export default function PoolChart({
   tokens,
@@ -54,13 +55,15 @@ export default function PoolChart({
   const handleTabChange = (tab: TimeSelectOption) =>
     setActiveTab(timeSelectOptions.indexOf(tab));
 
-  let pool;
+  let pool: SpicyPool | undefined;
 
   if (pools) {
     pool = getPoolByTags(pools, pair?.from?.tag, pair?.to?.tag);
   }
 
-  console.log(metrics);
+  const calculateRate = ({ reserveFrom, reserveTo }) => {
+    return numberToLocaleAndFix(reserveFrom / reserveTo, 4);
+  };
 
   if (!active || !pool) {
     return null;
@@ -78,30 +81,38 @@ export default function PoolChart({
               {`${pair?.from?.symbol}/${pair?.to?.symbol}`}
             </HeaderText>
             <HeaderPriceContainer>
-              <SubHeaderText>{pair?.from?.symbol}</SubHeaderText>
-              <SubHeaderTextColor up={true}>+0.00%</SubHeaderTextColor>
+              <SubHeaderText>
+                {calculateRate({
+                  reserveFrom: pool.fromToken.reserve,
+                  reserveTo: pool.toToken.reserve,
+                })}
+                &nbsp;{`${pair?.from?.symbol}`}
+              </SubHeaderText>
+              <SubHeaderTextColor up={true}>
+                &nbsp;&nbsp;+0.00%
+              </SubHeaderTextColor>
             </HeaderPriceContainer>
           </ReactPlaceholder>
         </PoolChartHeaderDescription>
         <PoolChartHeaderOptions>
           <PoolChartTimeSelection>
             <PoolChartStatistic>
-              <SubHeaderTextColor up={true}>TVL</SubHeaderTextColor>
               <SubHeaderText>
-                {numberToLocaleAndFix(pool?.totalReserveXtz, 2)} ꜩ
+                {numberToLocaleAndFix(pool?.totalReserveXtz, 2)}
               </SubHeaderText>
+              <SubHeaderTextColor up={true}>TVL ꜩ</SubHeaderTextColor>
             </PoolChartStatistic>
             <PoolChartStatistic>
-              <SubHeaderTextColor up={true}>APR</SubHeaderTextColor>
               <SubHeaderText>
                 {numberToLocaleAndFix(pool.lpApr, 2)}%
               </SubHeaderText>
+              <SubHeaderTextColor up={true}>APR</SubHeaderTextColor>
             </PoolChartStatistic>
             <PoolChartStatistic>
-              <SubHeaderTextColor up={true}>spAPR 🌶️</SubHeaderTextColor>
               <SubHeaderText>
                 {numberToLocaleAndFix(pool.farmApr, 2)}%
               </SubHeaderText>
+              <SubHeaderTextColor up={true}>spAPR</SubHeaderTextColor>
             </PoolChartStatistic>
           </PoolChartTimeSelection>
           <ButtonGroup>
