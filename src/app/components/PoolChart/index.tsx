@@ -139,46 +139,46 @@ export default function PoolChart({
   );
 }
 
-const renderLineChart = (theme: Theme, metrics) => (
-  <ResponsiveContainer width="100%" height="100%">
-    <AreaChart
-      width={500}
-      height={400}
-      data={metrics}
-      margin={{
-        top: 5,
-        right: 20,
-        left: 10,
-        bottom: 5,
-      }}
-    >
-      <XAxis dataKey="day" dy={10} stroke={theme.textSecondary} />
-      <YAxis
-        dx={-5}
-        tickFormatter={value => `$${value.toFixed(2)}`}
-        allowDecimals={true}
-        stroke={theme.textSecondary}
-      />
-      <Tooltip
-        labelStyle={{ color: theme.textSecondary }}
-        contentStyle={{
-          backgroundColor: theme.background.replace(
-            /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
-            'rgba$1,0.4)',
-          ),
-          borderRadius: 3,
+const renderLineChart = (theme: Theme, metrics) =>
+  metrics && (
+    <ResponsiveContainer width="100%" height="100%">
+      <AreaChart
+        width={500}
+        height={400}
+        data={[...metrics].reverse()}
+        margin={{
+          top: 5,
+          right: 20,
+          left: 10,
         }}
-      />
-      <Area
-        type="monotone"
-        dataKey="volumeXtz"
-        stroke={theme.backgroundVariant.replace(
-          /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
-          'rgba$1,1.5)',
-        )}
-        strokeWidth={3}
-        fill={theme.backgroundVariant}
-      />
-    </AreaChart>
-  </ResponsiveContainer>
-);
+      >
+        <XAxis dataKey="day" dy={10} stroke={theme.textSecondary} />
+        <YAxis
+          dx={-2}
+          tickFormatter={value => `$${value.toFixed(2)}`}
+          allowDecimals={true}
+          stroke={theme.textSecondary}
+        />
+        <Tooltip
+          labelStyle={{ color: theme.textSecondary }}
+          contentStyle={{
+            backgroundColor: theme.background.replace(
+              /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
+              'rgba$1,0.4)',
+            ),
+            borderRadius: 3,
+          }}
+        />
+        <Area
+          type="monotone"
+          dataKey="price"
+          stroke={theme.backgroundVariant.replace(
+            /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
+            'rgba$1,1.5)',
+          )}
+          strokeWidth={3}
+          fill={theme.backgroundVariant}
+        />
+      </AreaChart>
+    </ResponsiveContainer>
+  );

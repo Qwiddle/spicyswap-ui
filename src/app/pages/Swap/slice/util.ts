@@ -66,6 +66,7 @@ export const transformPools = (pools): SpicyPool[] => {
 
 export const transformPoolMetrics = (metrics): SpicyPoolMetric[] => {
   return metrics.map(metric => ({
+    price: metric.reserve0 / metric.reserve1,
     fromReserve: metric.reserve0,
     toReserve: metric.reserve1,
     reserveXtz: metric.reservextz,

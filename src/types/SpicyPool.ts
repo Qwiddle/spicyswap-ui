@@ -26,6 +26,7 @@ export interface SpicyPoolVolume {
 }
 
 export interface SpicyPoolMetric {
+  price: number;
   fromReserve: number;
   toReserve: number;
   reserveXtz: number;
