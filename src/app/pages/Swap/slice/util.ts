@@ -1,4 +1,4 @@
-import { SpicyPool } from 'types/SpicyPool';
+import { SpicyPool, SpicyPoolMetric } from 'types/SpicyPool';
 import { SpicyToken } from 'types/SpicyToken';
 import { calculateLPAprXtz, calculateFarmAprXtz } from 'utils/spicy';
 
@@ -13,6 +13,16 @@ export const transformTokens = (tokens): SpicyToken[] => {
     derivedUsd: token.derivedusd,
     totalLiquidityXtz: token.totalliquidityxtz,
     totalLiquidityUsd: token.totalliquidityusd,
+  }));
+};
+
+export const transformPoolMetrics = (metrics): SpicyPoolMetric[] => {
+  return metrics.map(metric => ({
+    fromReserve: metric.reserve0,
+    toReserve: metric.reserve1,
+    reserveXtz: metric.reservextz,
+    volumeXtz: metric.hourlyvolumextz,
+    day: metric.day,
   }));
 };
 

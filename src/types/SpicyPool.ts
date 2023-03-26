@@ -24,3 +24,11 @@ export interface SpicyPoolVolume {
   hourlyVolumeXtz: number;
   hourlyVolumeUsd: number;
 }
+
+export interface SpicyPoolMetric {
+  fromReserve: number;
+  toReserve: number;
+  reserveXtz: number;
+  volumeXtz: number;
+  day: string;
+}

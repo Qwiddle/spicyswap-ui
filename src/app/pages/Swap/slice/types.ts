@@ -1,4 +1,4 @@
-import { SpicyPool } from 'types/SpicyPool';
+import { SpicyPool, SpicyPoolMetric } from 'types/SpicyPool';
 import { SpicyToken } from 'types/SpicyToken';
 import { SwapPair } from 'types/Swap';
 import { SpicyPoolResponse } from './types/pool';
@@ -10,6 +10,7 @@ export interface SpicySwapState {
   error?: SpicySwapErrorType | null;
   tokens: SpicyToken[];
   pools: SpicyPool[];
+  poolMetrics: SpicyPoolMetric[] | null;
   fromAmount?: number;
   toAmount?: number;
   fromAmountUsd?: number;
@@ -21,6 +22,7 @@ export const enum SpicySwapErrorType {
   RESPONSE_ERROR = 1,
   TOKEN_NOT_FOUND = 2,
   POOL_NOT_FOUND = 3,
+  METRICS_NOT_FOUND = 4,
 }
 
 export type GetTokenProps = {
@@ -29,4 +31,8 @@ export type GetTokenProps = {
 
 export type GetPoolProps = {
   transformPools: (pools: SpicyPoolResponse[]) => SpicyPool[];
+};
+
+export type GetPoolMetricsProps = {
+  pairId: number;
 };

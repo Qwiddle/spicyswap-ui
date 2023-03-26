@@ -3,7 +3,7 @@ import { request } from 'utils/request';
 import { spicySwapActions as actions } from '.';
 import { GetPoolProps, GetTokenProps, SpicySwapErrorType } from './types';
 import { calculateDayAgg, calculateHourAgg } from 'utils/spicy';
-import { transformPools, transformTokens } from './util';
+import { transformPoolMetrics, transformPools, transformTokens } from './util';
 
 const SPICY_API = 'https://spicyb.sdaotools.xyz/api/rest';
 
@@ -45,6 +45,27 @@ export function* getPools({ transformPools }: GetPoolProps) {
   }
 }
 
+export function* getPoolMetrics({
+  payload,
+}: ReturnType<typeof actions.loadPoolMetrics>) {
+  const pairId = payload;
+  const requestURL = `${SPICY_API}/PoolDailyMetrics?_ilike=${pairId}`;
+
+  try {
+    // Call our request helper (see 'utils/request')
+    const { pair_day_data: poolMetrics } = yield call(request, requestURL);
+
+    if (poolMetrics?.length === 0) {
+      const transformedMetrics = transformPoolMetrics(poolMetrics);
+      yield put(actions.poolMetricsLoaded(transformedMetrics));
+    } else {
+      yield put(actions.poolsError(SpicySwapErrorType.METRICS_NOT_FOUND));
+    }
+  } catch (err: any) {
+    yield put(actions.poolMetricsError(SpicySwapErrorType.RESPONSE_ERROR));
+  }
+}
+
 /**
  * Root saga manages watcher lifecycle
  */
@@ -63,4 +84,5 @@ export function* spicySwapSaga() {
       transformPools,
     }),
   );
+  yield takeLatest(actions.loadPoolMetrics.type, getPoolMetrics);
 }

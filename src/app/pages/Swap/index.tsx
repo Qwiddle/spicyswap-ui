@@ -18,10 +18,11 @@ import {
   selectLoading,
   selectError,
   selectPair,
+  selectPoolMetrics,
 } from './slice/selectors';
 import { useEffect, useRef, useState } from 'react';
 import { SpicyToken } from 'types/SpicyToken';
-import { getTokenByTag } from 'utils/spicy';
+import { getPoolByTags, getTokenByTag } from 'utils/spicy';
 import PoolChart from 'app/components/PoolChart';
 
 //define default pair by contract address / tag
@@ -37,6 +38,7 @@ export function Swap() {
 
   const tokens = useSelector(selectTokens);
   const pools = useSelector(selectPools);
+  const poolMetrics = useSelector(selectPoolMetrics);
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
   const pair = useSelector(selectPair);
@@ -103,6 +105,16 @@ export function Swap() {
     }
   }, [tokens, pair]);
 
+  useEffect(() => {
+    if (pools.length && pair && pair.from && pair.to) {
+      const pool = getPoolByTags(pools, pair.from.tag, pair.to.tag);
+
+      if (pool) {
+        dispatch(actions.loadPoolMetrics(pool?.pairId));
+      }
+    }
+  }, [pair, pools]);
+
   return (
     <>
       <Helmet>
@@ -119,6 +131,7 @@ export function Swap() {
           <PriceChart
             tokens={tokens}
             pools={pools}
+            metrics={poolMetrics}
             pair={pair}
             setPair={setPair}
             modalView={modalView}
@@ -128,6 +141,7 @@ export function Swap() {
           <PoolChart
             tokens={tokens}
             pools={pools}
+            metrics={poolMetrics}
             pair={pair}
             setPair={setPair}
             modalView={modalView}

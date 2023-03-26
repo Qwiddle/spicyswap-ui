@@ -16,6 +16,11 @@ export const selectPools = createSelector(
   spicySwapState => spicySwapState.pools,
 );
 
+export const selectPoolMetrics = createSelector(
+  [selectDomain],
+  spicySwapState => spicySwapState.poolMetrics,
+);
+
 export const selectLoading = createSelector(
   [selectDomain],
   spicySwapState => spicySwapState.loading,
