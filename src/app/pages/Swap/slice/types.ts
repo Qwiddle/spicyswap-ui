@@ -1,6 +1,8 @@
 import { SpicyPool } from 'types/SpicyPool';
 import { SpicyToken } from 'types/SpicyToken';
 import { SwapPair } from 'types/Swap';
+import { SpicyPoolResponse } from './types/pool';
+import { SpicyTokenResponse } from './types/token';
 
 /* --- STATE --- */
 export interface SpicySwapState {
@@ -22,9 +24,9 @@ export const enum SpicySwapErrorType {
 }
 
 export type GetTokenProps = {
-  transformTokens: (tokens: any[]) => SpicyToken[];
+  transformTokens: (tokens: SpicyTokenResponse[]) => SpicyToken[];
 };
 
 export type GetPoolProps = {
-  transformPools: (pools: any[]) => SpicyPool[];
+  transformPools: (pools: SpicyPoolResponse[]) => SpicyPool[];
 };
