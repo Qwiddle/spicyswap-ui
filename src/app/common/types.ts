@@ -6,3 +6,33 @@ export enum TimeSelectOption {
   SEVENDAY = '7d',
   THIRTYDAY = '30d',
 }
+
+export type TokenDayData = Array<{
+  last_price: number;
+  last_price_usd: number;
+}>;
+
+export interface TokenDayAgreggate {
+  aggregate: {
+    sum: {
+      dailyvolumextz: number;
+      dailyvolumeusd: number;
+    };
+  };
+}
+
+interface SpicyTokenInterface {
+  name: string;
+  symbol: string;
+  decimals: string;
+  img: string;
+  tag: string;
+  derivedxtz: number;
+  derivedusd: number;
+  totalliquidityxtz: number;
+  totalliquidityusd: number;
+  tokenDayData_agreggate: TokenDayAgreggate;
+  tokenDaydata: TokenDayData;
+}
+
+export type SpicyTokenResponseData = Array<SpicyTokenInterface>;
