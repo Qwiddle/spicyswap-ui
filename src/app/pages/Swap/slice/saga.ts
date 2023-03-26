@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { request } from 'utils/request';
 import { spicySwapActions as actions } from '.';
 import { GetPoolProps, GetTokenProps, SpicySwapErrorType } from './types';
-import { calculateDayAgg } from 'utils/spicy';
+import { calculateDayAgg, calculateHourAgg } from 'utils/spicy';
 import { transformPools, transformTokens } from './util';
 
 const SPICY_API = 'https://spicyb.sdaotools.xyz/api/rest';
@@ -26,7 +26,9 @@ export function* getTokens({ transformTokens }: GetTokenProps) {
 }
 
 export function* getPools({ transformPools }: GetPoolProps) {
-  const requestURL = `${SPICY_API}/PoolListAll?day_agg_start=${calculateDayAgg()}`;
+  const requestURL = `
+    ${SPICY_API}/PoolListAll?day_agg_start=${calculateDayAgg()}&hour_agg_start=${calculateHourAgg()}
+  `;
 
   try {
     // Call our request helper (see 'utils/request')

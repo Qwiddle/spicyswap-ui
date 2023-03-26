@@ -1,13 +1,24 @@
 import { SpicyToken } from 'types/SpicyToken';
 
 /**
- * calculates an aggregate value based on the current time.
+ * calculates an aggregate value for the day based on the current time.
  * used when querying SpicySwap's API to get accurate prices.
  * @returns number;
  */
 export const calculateDayAgg = () => {
   const agg_start = new Date();
   agg_start.setDate(agg_start.getDate() - 7);
+  return Math.floor(agg_start.getTime() / 1000);
+};
+
+/**
+ * calculates an aggregate value for the hour based on the current time.
+ * used when querying SpicySwap's API to get accurate prices.
+ * @returns number;
+ */
+export const calculateHourAgg = () => {
+  const agg_start = new Date();
+  agg_start.setDate(agg_start.getDate() - 1);
   return Math.floor(agg_start.getTime() / 1000);
 };
 
@@ -20,4 +31,22 @@ export const calculateDayAgg = () => {
  */
 export const getTokenByTag = (tokens: SpicyToken[], tag: string) => {
   return tokens.find(t => t.tag === tag);
+};
+
+// calculate APR for a given pool
+export const calculateLPAprXtz = ({ volume, reserve }) => {
+  const apr = ((volume * 0.002) / reserve) * 365 * 100;
+
+  console.log('APR LP', { apr });
+
+  return apr;
+};
+
+// calculate APR for a given pool
+export const calculateFarmAprXtz = ({ volume, staked }) => {
+  const apr = ((volume * 0.001) / staked) * 365 * 100;
+
+  console.log('APR Farm', { apr });
+
+  return apr;
 };
