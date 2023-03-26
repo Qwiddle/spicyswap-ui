@@ -55,7 +55,7 @@ export function* getPoolMetrics({
     // Call our request helper (see 'utils/request')
     const { pair_day_data: poolMetrics } = yield call(request, requestURL);
 
-    if (poolMetrics?.length === 0) {
+    if (poolMetrics?.length > 0) {
       const transformedMetrics = transformPoolMetrics(poolMetrics);
       yield put(actions.poolMetricsLoaded(transformedMetrics));
     } else {
