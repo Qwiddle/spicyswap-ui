@@ -1,3 +1,4 @@
+import { SpicyPool } from 'types/SpicyPool';
 import { SpicyToken } from 'types/SpicyToken';
 
 export const transformTokens = (tokens): SpicyToken[] => {
