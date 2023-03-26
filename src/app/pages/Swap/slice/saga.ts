@@ -9,7 +9,6 @@ import { SpicyPool } from 'types/SpicyPool';
 const SPICY_API = 'https://spicyb.sdaotools.xyz/api/rest';
 
 export function* getTokens() {
-  yield delay(500);
   const requestURL = `${SPICY_API}/TokenList?day_agg_start=${calculateDayAgg()}`;
 
   try {
