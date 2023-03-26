@@ -1,3 +1,4 @@
+import { SpicyPool } from 'types/SpicyPool';
 import { SpicyToken } from 'types/SpicyToken';
 import { SwapPair } from 'types/Swap';
 
@@ -6,6 +7,7 @@ export interface SpicySwapState {
   loading: boolean;
   error?: SpicySwapErrorType | null;
   tokens: SpicyToken[];
+  pools: SpicyPool[];
   fromAmount?: number;
   toAmount?: number;
   fromAmountUsd?: number;
@@ -16,4 +18,5 @@ export interface SpicySwapState {
 export const enum SpicySwapErrorType {
   RESPONSE_ERROR = 1,
   TOKEN_NOT_FOUND = 2,
+  POOL_NOT_FOUND = 3,
 }

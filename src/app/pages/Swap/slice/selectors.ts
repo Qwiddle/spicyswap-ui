@@ -11,6 +11,11 @@ export const selectTokens = createSelector(
   spicySwapState => spicySwapState.tokens,
 );
 
+export const selectPools = createSelector(
+  [selectDomain],
+  spicySwapState => spicySwapState.pools,
+);
+
 export const selectLoading = createSelector(
   [selectDomain],
   spicySwapState => spicySwapState.loading,

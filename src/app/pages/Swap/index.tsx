@@ -14,6 +14,7 @@ import { useSpicySwapSlice } from './slice';
 import { useWalletSlice } from 'app/slice/wallet';
 import {
   selectTokens,
+  selectPools,
   selectLoading,
   selectError,
   selectPair,
@@ -35,9 +36,12 @@ export function Swap() {
   const { actions: walletActions } = useWalletSlice();
 
   const tokens = useSelector(selectTokens);
+  const pools = useSelector(selectPools);
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
   const pair = useSelector(selectPair);
+
+  console.log(pools, tokens);
 
   const [modalView, setModalView] = useState(false);
   const [limitView, setLimitView] = useState(false);
@@ -69,6 +73,10 @@ export function Swap() {
     // When initial state does not contain tokens, call api to load tokens
     if (tokens.length === 0) {
       dispatch(actions.loadTokens());
+    }
+
+    if (pools.length === 0) {
+      dispatch(actions.loadPools());
     }
   }, []);
 

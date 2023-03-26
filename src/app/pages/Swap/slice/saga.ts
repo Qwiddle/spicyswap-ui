@@ -4,6 +4,7 @@ import { spicySwapActions as actions } from '.';
 import { SpicySwapErrorType } from './types';
 import { SpicyToken } from 'types/SpicyToken';
 import { calculateDayAgg } from 'utils/spicy';
+import { SpicyPool } from 'types/SpicyPool';
 
 const SPICY_API = 'https://spicyb.sdaotools.xyz/api/rest';
 
@@ -40,6 +41,62 @@ export function* getTokens() {
   }
 }
 
+export function* getPools() {
+  const requestURL = `${SPICY_API}/PoolListAll?day_agg_start=${calculateDayAgg()}`;
+
+  try {
+    // Call our request helper (see 'utils/request')
+    const { pair_info: pools } = yield call(request, requestURL);
+
+    const transformPools = (pools): SpicyPool[] => {
+      const transformed = pools.map(pool => {
+        return {
+          pairId: pool.pair_id,
+          contract: pool.contract,
+          fromToken: {
+            reserve: pool.reserve0,
+            tag: pool.token0,
+            volume: pool.volumetoken0,
+            price: {
+              xtz: pool.token_a.derivedxtz,
+              usd: pool.token_a.derivedusd,
+            },
+          },
+          toToken: {
+            reserve: pool.reserve1,
+            tag: pool.token1,
+            volume: pool.volumetoken1,
+            price: {
+              xtz: pool.token_b.derivedxtz,
+              usd: pool.token_b.derivedusd,
+            },
+          },
+          volume: {
+            hourlyVolumeXtz:
+              pool.pairHourData_aggregate.aggregate.sum.hourlyvolumextz,
+            hourlyVolumeUsd:
+              pool.pairHourData_aggregate.aggregate.sum.hourlyvolumeusd,
+          },
+          totalReserveXtz: pool.reservextz,
+          totalReserveUsd: pool.reserveusd,
+          txCount: pool.txcount,
+        };
+      });
+
+      return transformed;
+    };
+
+    if (pools?.length > 0) {
+      const transformedPools = transformPools(pools);
+      yield put(actions.poolsLoaded(transformedPools));
+    } else {
+      yield put(actions.poolsError(SpicySwapErrorType.POOL_NOT_FOUND));
+    }
+  } catch (err: any) {
+    yield put(actions.poolsError(SpicySwapErrorType.RESPONSE_ERROR));
+  }
+}
+
 /**
  * Root saga manages watcher lifecycle
  */
@@ -49,4 +106,5 @@ export function* spicySwapSaga() {
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
   yield takeLatest(actions.loadTokens.type, getTokens);
+  yield takeLatest(actions.loadPools.type, getPools);
 }
