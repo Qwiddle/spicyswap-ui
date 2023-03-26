@@ -20,3 +20,11 @@ export const enum SpicySwapErrorType {
   TOKEN_NOT_FOUND = 2,
   POOL_NOT_FOUND = 3,
 }
+
+export type GetTokenProps = {
+  transformTokens: (tokens: any[]) => SpicyToken[];
+};
+
+export type GetPoolProps = {
+  transformPools: (pools: any[]) => SpicyPool[];
+};
