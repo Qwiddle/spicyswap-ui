@@ -16,16 +16,6 @@ export const transformTokens = (tokens): SpicyToken[] => {
   }));
 };
 
-export const transformPoolMetrics = (metrics): SpicyPoolMetric[] => {
-  return metrics.map(metric => ({
-    fromReserve: metric.reserve0,
-    toReserve: metric.reserve1,
-    reserveXtz: metric.reservextz,
-    volumeXtz: metric.hourlyvolumextz,
-    day: metric.day,
-  }));
-};
-
 export const transformPools = (pools): SpicyPool[] => {
   return pools.map(pool => {
     const lpApr = calculateLPAprXtz({
@@ -72,4 +62,21 @@ export const transformPools = (pools): SpicyPool[] => {
       farmApr,
     };
   });
+};
+
+export const transformPoolMetrics = (metrics): SpicyPoolMetric[] => {
+  return metrics.map(metric => ({
+    fromReserve: metric.reserve0,
+    toReserve: metric.reserve1,
+    reserveXtz: metric.reservextz,
+    volumeXtz: metric.dailyvolumextz,
+    day: timestamptoDayMonth(new Date(metric.day)),
+  }));
+};
+
+export const timestamptoDayMonth = (timestamp: Date): string => {
+  const date = new Date(timestamp);
+  const day = date.getDate();
+  const month = date.toLocaleString('default', { month: 'short' });
+  return `${day} ${month}`;
 };
