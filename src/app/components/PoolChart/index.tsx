@@ -97,22 +97,22 @@ export default function PoolChart({
         <PoolChartHeaderOptions>
           <PoolChartTimeSelection>
             <PoolChartStatistic>
-              <SubHeaderText>
+              <SubHeaderText>TVL ꜩ</SubHeaderText>
+              <SubHeaderTextColor up={true}>
                 {numberToLocaleAndFix(pool?.totalReserveXtz, 2)}
-              </SubHeaderText>
-              <SubHeaderTextColor up={true}>TVL ꜩ</SubHeaderTextColor>
+              </SubHeaderTextColor>
             </PoolChartStatistic>
             <PoolChartStatistic>
-              <SubHeaderText>
+              <SubHeaderText>APR</SubHeaderText>
+              <SubHeaderTextColor up={true}>
                 {numberToLocaleAndFix(pool.lpApr, 2)}%
-              </SubHeaderText>
-              <SubHeaderTextColor up={true}>APR</SubHeaderTextColor>
+              </SubHeaderTextColor>
             </PoolChartStatistic>
             <PoolChartStatistic>
-              <SubHeaderText>
-                {numberToLocaleAndFix(pool.farmApr, 2)}%
-              </SubHeaderText>
-              <SubHeaderTextColor up={true}>spAPR</SubHeaderTextColor>
+              <SubHeaderText>spAPR</SubHeaderText>
+              <SubHeaderTextColor up={true}>
+                {numberToLocaleAndFix(pool.farmApr, 2)}% 🌶️
+              </SubHeaderTextColor>
             </PoolChartStatistic>
           </PoolChartTimeSelection>
           <ButtonGroup>
