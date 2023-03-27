@@ -51,9 +51,17 @@ export function SwapTokenList<SwapTokenListProps>({
   const [tokenSearchInput, setTokenSearchInput] = useState<string>('');
   const refTokenSearchInput = useRef<HTMLInputElement>(null);
 
+  const handleListClose = () => {
+    toggleModal();
+    if (refTokenSearchInput) {
+      setTokenSearchInput('');
+      refTokenSearchInput.current!.value = '';
+    }
+  };
+
   const handleTokenClick = (token: SpicyToken) => {
     setPair(token);
-    toggleModal();
+    handleListClose();
   };
 
   const handleSwapSearchEnter = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -70,7 +78,7 @@ export function SwapTokenList<SwapTokenListProps>({
   return (
     <SwapTokenListBox onClick={stopPropagation}>
       <SwapTokenListHeader>
-        <SwapTokenListHeaderIcon onClick={toggleModal}>
+        <SwapTokenListHeaderIcon onClick={handleListClose}>
           <UilArrowLeft size="34" />
         </SwapTokenListHeaderIcon>
         <P style={{ fontSize: '18px' }}>Token Selection</P>
