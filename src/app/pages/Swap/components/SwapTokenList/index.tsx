@@ -1,7 +1,14 @@
 import { UilArrowLeft, UilCog } from '@iconscout/react-unicons';
 import { SpicyToken } from 'types/SpicyToken';
+import { SpicyPool } from 'types/SpicyPool';
 import { SwapTokenIcon } from '../SwapTokenIcon';
-import { ChangeEvent, KeyboardEvent, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  MutableRefObject,
+  useRef,
+  useState,
+} from 'react';
 import { stopPropagation } from 'utils/helper';
 import {
   SwapTokenListBox,
@@ -16,17 +23,30 @@ import {
   SwapTokenListSearchInput,
 } from './SwapTokenList';
 import { P, P2 } from 'app/components/P';
+import { SwapDirection, SwapPair } from 'types/Swap';
+import {
+  filterTokenList,
+  findAvailablePairs,
+  findAvailablePools,
+  findAvailableTokens,
+} from './util';
 
 interface SwapTokenListProps {
   toggleModal: void;
   tokens: SpicyToken[];
+  pools: SpicyPool[];
   setPair: void;
+  pair: SwapPair;
+  activeSwapDir: MutableRefObject<SwapDirection | undefined>;
 }
 
 export function SwapTokenList<SwapTokenListProps>({
   toggleModal,
   tokens,
+  pools,
   setPair,
+  pair,
+  activeSwapDir,
 }) {
   const [tokenSearchInput, setTokenSearchInput] = useState<string>('');
   const refTokenSearchInput = useRef<HTMLInputElement>(null);
@@ -45,13 +65,6 @@ export function SwapTokenList<SwapTokenListProps>({
   ) => {
     const inputValue = event.target.value;
     setTokenSearchInput(inputValue.toLowerCase());
-  };
-
-  const trimTokenListByInput = (token: SpicyToken) => {
-    return (
-      token.name.toLowerCase().includes(tokenSearchInput) ||
-      token.symbol.toLowerCase().includes(tokenSearchInput)
-    );
   };
 
   return (
@@ -75,21 +88,28 @@ export function SwapTokenList<SwapTokenListProps>({
         />
       </SwapTokenListSearch>
       <SwapTokenListContent>
-        {tokens.filter(trimTokenListByInput).map((token, index) => (
-          <SwapTokenListItem
-            onClick={() => handleTokenClick(token)}
-            key={index}
-          >
-            <SwapTokenIcon url={token.img} />
-            <SwapTokenListAssetText>
-              <P>{token.name}</P>
-              <P2>{token.symbol}</P2>
-            </SwapTokenListAssetText>
-            <SwapTokenListAssetBalance>
-              <P>$ {token.derivedUsd.toFixed(2)}</P>
-            </SwapTokenListAssetBalance>
-          </SwapTokenListItem>
-        ))}
+        {pair &&
+          filterTokenList({
+            tokens,
+            pair,
+            pools,
+            tokenSearchInput,
+            activeSwapDir,
+          }).map((token, index) => (
+            <SwapTokenListItem
+              onClick={() => handleTokenClick(token)}
+              key={index}
+            >
+              <SwapTokenIcon url={token.img} />
+              <SwapTokenListAssetText>
+                <P>{token.name}</P>
+                <P2>{token.symbol}</P2>
+              </SwapTokenListAssetText>
+              <SwapTokenListAssetBalance>
+                <P>$ {token.derivedUsd.toFixed(2)}</P>
+              </SwapTokenListAssetBalance>
+            </SwapTokenListItem>
+          ))}
       </SwapTokenListContent>
     </SwapTokenListBox>
   );
