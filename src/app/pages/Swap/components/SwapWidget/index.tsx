@@ -1,7 +1,7 @@
 import { UilSlidersVAlt } from '@iconscout/react-unicons';
 import { UilSync } from '@iconscout/react-unicons';
 import { A } from 'app/components/A';
-import { useState } from 'react';
+import { MutableRefObject, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { SwapDirection, SwapPair } from 'types/Swap';
 import { SwapAssetSelection } from '../SwapSelection';
@@ -25,9 +25,11 @@ import LimitOrderPanel from '../LimitOrderPanel';
 import SwapWidgetTabs, { SwapWidgetTab } from '../SwapWidgetTabs';
 import { selectConnected } from 'app/slice/wallet/selectors';
 import LiquidityPanel from '../LiquidityPanel';
+import { SpicyPool } from 'types/SpicyPool';
 
 type SwapWidgetProps = {
   tokens?: SpicyToken[];
+  pools?: SpicyPool[];
   pair?: SwapPair;
   setPair: (token: SpicyToken) => void;
   modalView: boolean;
@@ -35,10 +37,12 @@ type SwapWidgetProps = {
   onWalletConnect: () => void;
   toggleLimit: (show?: boolean) => void;
   togglePool: (show?: boolean) => void;
+  activeSwapDir: MutableRefObject<SwapDirection | undefined>;
 };
 
 export function SwapWidget({
   tokens,
+  pools,
   pair,
   setPair,
   modalView,
@@ -46,6 +50,7 @@ export function SwapWidget({
   onWalletConnect,
   toggleLimit,
   togglePool,
+  activeSwapDir,
 }: SwapWidgetProps) {
   const connected = useSelector(selectConnected);
   const [activeTab, setActiveTab] = useState<string>(SwapWidgetTab.Swap);
@@ -135,7 +140,10 @@ export function SwapWidget({
         <SwapTokenList
           toggleModal={toggleModal}
           tokens={tokens}
+          pools={pools}
           setPair={setPair}
+          pair={pair}
+          activeSwapDir={activeSwapDir}
         />
       </Modal>
     </>

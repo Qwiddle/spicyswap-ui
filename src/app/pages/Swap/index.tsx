@@ -150,6 +150,7 @@ export function Swap() {
           />
           <SwapWidget
             tokens={tokens}
+            pools={pools}
             pair={pair}
             setPair={setPair}
             modalView={modalView}
@@ -157,6 +158,7 @@ export function Swap() {
             onWalletConnect={onWalletConnect}
             toggleLimit={toggleLimit}
             togglePool={togglePool}
+            activeSwapDir={activeSwapDir}
           />
         </Content>
         <Footer />
