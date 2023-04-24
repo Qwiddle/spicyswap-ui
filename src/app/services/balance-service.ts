@@ -7,8 +7,7 @@ import { IChartData } from './Models/IChartData';
 export class BalanceService {
   static TzKT_URL: string = 'https://api.tzkt.io/v1/';
   static TOKEN_ADDRESS: string = 'KT1MZg99PxMDEENwB4Fi64xkqAVh5d1rv8Z9';
-  static BURN_ADDRESSES: string = 'KT1CZMurPAjSfZqcn6LBUNUhG4byE6AJgDT6';
-  static DAO_ADDRESSES: string = 'KT1LyPqdRVBFdQvhjyybG5osRCXnGSrk15M5';
+  static BURN_ADDRESSES: string[] = ['KT1MZg99PxMDEENwB4Fi64xkqAVh5d1rv8Z9'];
 
   tokenData: ITokenDetails | undefined;
 
@@ -36,19 +35,7 @@ export class BalanceService {
           if (balances !== undefined) {
             balances.forEach(item => {
               if (item.address.address.toLowerCase().startsWith('kt')) {
-                if (
-                  item.address.address.toLowerCase() ===
-                  BalanceService.BURN_ADDRESSES.toLowerCase()
-                ) {
-                  result.totalBurned += item.balance ?? 0;
-                } else if (
-                  item.address.address.toLowerCase() ===
-                  BalanceService.DAO_ADDRESSES.toLowerCase()
-                ) {
-                  result.totalInDAO += item.balance ?? 0;
-                } else {
-                  result.totalInContracts += item.balance ?? 0;
-                }
+                result.totalInContracts += item.balance ?? 0;
               } else {
                 result.totalInWallets += item.balance ?? 0;
               }
@@ -59,14 +46,6 @@ export class BalanceService {
               chartArray.push(chartObj);
             });
             result.chartData = chartArray;
-            result.totalInContractsPercent =
-              (result.totalInContracts / 100) * result.totalSupply;
-            result.totalInWalletsPercent =
-              (result.totalInWallets / 100) * result.totalSupply;
-            result.totalInDAOPercent =
-              (result.totalInDAO / 100) * result.totalSupply;
-            result.totalBurnedPercent =
-              (result.totalBurned / 100) * result.totalSupply;
           }
         });
       }
