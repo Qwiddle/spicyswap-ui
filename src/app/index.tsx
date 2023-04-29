@@ -14,6 +14,7 @@ import { GlobalStyle } from 'styles/global-styles';
 
 import { Swap } from './pages/Swap/Loadable';
 import { NavBar } from './components/NavBar';
+import { PepePot } from './pages/PepePot/Loadable';
 
 export function App() {
   return (
@@ -27,6 +28,7 @@ export function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Swap />} />
+        <Route path="/pot" element={<PepePot />} />
         <Route path="*" element={<Swap />} />
       </Routes>
       <GlobalStyle />

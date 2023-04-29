@@ -1,4 +1,8 @@
-import { UilUsdCircle, UilBars } from '@iconscout/react-unicons';
+import {
+  UilUsdCircle,
+  UilBars,
+  UilFlaskPotion,
+} from '@iconscout/react-unicons';
 import {
   NavWrapper,
   NavItem,
@@ -32,7 +36,13 @@ export function NavBarContent({
 
   const pages: NavPage[] = [
     {
-      url: '#',
+      url: '/pot',
+      name: 'PepePot',
+      alt: 'Pepe Pot Page',
+      icon: <UilFlaskPotion />,
+    },
+    {
+      url: '/swap',
       name: 'Swap',
       alt: 'Swap Page',
       icon: <UilUsdCircle />,
@@ -46,7 +56,6 @@ export function NavBarContent({
           <NavItem
             key={index}
             href={page.url}
-            target="_blank"
             title={page.alt}
             rel="noopener noreferrer"
           >
