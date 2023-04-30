@@ -1,3 +1,4 @@
+import { PepePotState } from 'app/pages/PepePot/slice/types';
 import { SpicySwapState } from 'app/pages/Swap/slice/types';
 import { WalletState } from 'app/slice/wallet/types';
 import { ThemeState } from 'styles/theme/slice/types';
@@ -13,5 +14,6 @@ export interface RootState {
   theme?: ThemeState;
   spicySwap?: SpicySwapState;
   wallet?: WalletState;
+  pepePot: PepePotState;
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }
