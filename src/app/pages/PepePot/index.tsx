@@ -15,6 +15,7 @@ import {
   PotStatistics,
   PotStatisticsItem,
 } from './styles';
+import { PotTable } from './components/PotTable';
 
 export const PepePot = () => {
   return (
@@ -29,19 +30,19 @@ export const PepePot = () => {
       </PotDescription>
       <PotStatistics>
         <PotStatisticsItem>
-          <P>Odds to Win Pot</P>
+          <P>Odds</P>
           <P>5%</P>
         </PotStatisticsItem>
         <PotStatisticsItem>
-          <P>Total Wagered</P>
+          <P>Wagered</P>
           <P>1,123,213</P>
         </PotStatisticsItem>
         <PotStatisticsItem>
-          <P>PEPE Burned</P>
+          <P>Burned</P>
           <P>1,123,000</P>
         </PotStatisticsItem>
         <PotStatisticsItem>
-          <P>PEPE Sent to DAO</P>
+          <P>DAO</P>
           <P>1,123,213</P>
         </PotStatisticsItem>
       </PotStatistics>
@@ -68,6 +69,7 @@ export const PepePot = () => {
           </span>
         </PotCTAAction>
       </PotCTA>
+      <PotTable />
     </Content>
   );
 };

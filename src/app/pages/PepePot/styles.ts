@@ -23,12 +23,18 @@ export const PotDescription = styled.div`
 `;
 
 export const PotStatistics = styled.div`
-  display: flex;
-  gap: 1.25rem;
-  flex-direction: column;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 2fr 2fr;
+  justify-items: space-around;
+  width: 100%;
+  padding: 0 3.5rem;
 
   ${media.small} {
-    flex-direction: row;
+    grid-template-columns: 2fr 2fr 2fr 2fr;
+    gap: 2rem;
+    width: initial;
+    padding: 0;
   }
 `;
 
