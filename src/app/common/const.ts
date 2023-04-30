@@ -18,11 +18,23 @@ export const DAPP_ICON_URL: string =
 
 export const DEFAULT_RPC: string = 'https://mainnet.api.tez.ie';
 export const DEFAULT_NETWORK_TYPE: NetworkType = NetworkType.MAINNET;
+export const GHOSTNET: NetworkType = NetworkType.GHOSTNET;
+
+export const DEFAULT_RPCS: Partial<Record<NetworkType, string>> = {
+  mainnet: 'https://mainnet.api.tez.ie',
+  ghostnet: 'https://ghostnet.ecadinfra.com',
+};
 
 export const dappOptions: DAppClientOptions = {
   iconUrl: DAPP_ICON_URL,
   preferredNetwork: DEFAULT_NETWORK_TYPE,
   name: DAPP_NAME,
+};
+
+export const pepePotDappOptions: DAppClientOptions = {
+  iconUrl: DAPP_ICON_URL,
+  preferredNetwork: NetworkType.GHOSTNET,
+  name: 'Pepe Pot',
 };
 
 export const defaultPairList: string[] = [
