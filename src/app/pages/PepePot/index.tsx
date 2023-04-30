@@ -17,8 +17,25 @@ import {
 } from './styles';
 import { PotTable } from './components/PotTable';
 import { Helmet } from 'react-helmet-async';
+import { useDispatch, useSelector } from 'react-redux';
+import { usePepePotSlice } from './slice';
+import { selectStatistics } from './slice/selectors';
+import { useEffect } from 'react';
 
 export const PepePot = () => {
+  const dispatch = useDispatch();
+  const { actions } = usePepePotSlice();
+
+  const stats = useSelector(selectStatistics);
+
+  const handleButtonClick = () => {
+    //todo
+  };
+
+  useEffect(() => {
+    dispatch(actions.getStatistics());
+  }, [dispatch, actions]);
+
   return (
     <>
       <Helmet>
@@ -40,19 +57,19 @@ export const PepePot = () => {
         <PotStatistics>
           <PotStatisticsItem>
             <Bold>Odds</Bold>
-            <Bold>5%</Bold>
+            <Bold>{`${stats.currentOdds.toFixed(2)}%`}</Bold>
           </PotStatisticsItem>
           <PotStatisticsItem>
             <Bold>Wagered</Bold>
-            <Bold>1,123,213</Bold>
+            <Bold>{stats.totalWagered.toLocaleString('en-US')}</Bold>
           </PotStatisticsItem>
           <PotStatisticsItem>
             <Bold>Burned</Bold>
-            <Bold>1,123,000</Bold>
+            <Bold>{stats.burnAmount.toLocaleString('en-US')}</Bold>
           </PotStatisticsItem>
           <PotStatisticsItem>
             <Bold>DAO</Bold>
-            <Bold>1,123,213</Bold>
+            <Bold>{stats.daoAmount.toLocaleString('en-US')}</Bold>
           </PotStatisticsItem>
         </PotStatistics>
         <PotCTA>
@@ -65,13 +82,17 @@ export const PepePot = () => {
             />
             <PotCTACounter>
               <PotCTASpan>$PEPE Pot Size</PotCTASpan>
-              <PotCTASize>120,000</PotCTASize>
+              <PotCTASize>
+                {stats.currentPot.toLocaleString('en-US')}
+              </PotCTASize>
               <img loading="lazy" src={pot} alt="" />
             </PotCTACounter>
           </PotCTAImage>
           <PotCTAAction>
             <span>Placing a bet will wager 10,000 $PEPE.</span>
-            <PotCTAButton>Place your bet 🐸</PotCTAButton>
+            <PotCTAButton onClick={handleButtonClick}>
+              Place your bet 🐸
+            </PotCTAButton>
             <span>
               If you lose, 75% of your $PEPE are added to the pot, 12.5% is put
               into the DAO and 12.5% is burned.

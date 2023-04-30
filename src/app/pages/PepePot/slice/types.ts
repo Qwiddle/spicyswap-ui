@@ -1,5 +1,6 @@
 /* --- STATE --- */
 export interface PepePotState {
+  totalWagered: number;
   betAmount: number;
   daoAmount: number;
   potAmount: number;
@@ -8,4 +9,5 @@ export interface PepePotState {
   currentOdds: number;
   currentPot: number;
   pending: boolean;
+  inProgress: boolean;
 }
