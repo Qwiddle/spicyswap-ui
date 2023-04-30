@@ -28,7 +28,6 @@ export const PotStatistics = styled.div`
   grid-template-columns: 2fr 2fr;
   justify-items: space-around;
   width: 100%;
-  padding: 0 3.5rem;
 
   ${media.small} {
     grid-template-columns: 2fr 2fr 2fr 2fr;

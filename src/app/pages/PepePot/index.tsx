@@ -1,4 +1,4 @@
-import { P } from 'app/components/P';
+import { Bold, P } from 'app/components/P';
 import pot from './assets/pot.svg';
 import pepeInPot from './assets/pepeinpot.png';
 import styled from 'styled-components';
@@ -30,20 +30,20 @@ export const PepePot = () => {
       </PotDescription>
       <PotStatistics>
         <PotStatisticsItem>
-          <P>Odds</P>
-          <P>5%</P>
+          <Bold>Odds</Bold>
+          <Bold>5%</Bold>
         </PotStatisticsItem>
         <PotStatisticsItem>
-          <P>Wagered</P>
-          <P>1,123,213</P>
+          <Bold>Wagered</Bold>
+          <Bold>1,123,213</Bold>
         </PotStatisticsItem>
         <PotStatisticsItem>
-          <P>Burned</P>
-          <P>1,123,000</P>
+          <Bold>Burned</Bold>
+          <Bold>1,123,000</Bold>
         </PotStatisticsItem>
         <PotStatisticsItem>
-          <P>DAO</P>
-          <P>1,123,213</P>
+          <Bold>DAO</Bold>
+          <Bold>1,123,213</Bold>
         </PotStatisticsItem>
       </PotStatistics>
       <PotCTA>

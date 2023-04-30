@@ -14,6 +14,10 @@ export const P = styled.p`
   }
 `;
 
+export const Bold = styled(P)`
+  font-weight: 600;
+`;
+
 export const P2 = styled(P)`
   color: ${p => p.theme.text};
   opacity: 0.7;
