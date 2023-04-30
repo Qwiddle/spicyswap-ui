@@ -51,7 +51,6 @@ export const PotTable = styled.table`
 
   @media (max-width: 600px) {
     font-size: 14px;
-    max-width: 400px;
 
     thead {
       display: none;
