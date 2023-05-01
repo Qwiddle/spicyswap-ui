@@ -33,11 +33,13 @@ const slice = createSlice({
         toast.success('Bet confirmed!', {
           ...toastConfig,
           icon: '🐸',
+          position: 'top-center',
         });
       } else {
         toast.error('Bet failed. (probably)', {
           ...toastConfig,
           icon: '🐸',
+          position: 'top-center',
         });
       }
 
