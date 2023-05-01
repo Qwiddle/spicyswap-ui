@@ -12,9 +12,8 @@ import {
   PotCTASpan,
   PotDescription,
   PotHeader,
-  PotStatistics,
-  PotStatisticsItem,
 } from './styles';
+import { PotStatistics } from './components/PotStatistics';
 import { PotTable } from './components/PotTable';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +21,6 @@ import { usePepePotSlice } from './slice';
 import {
   selectBetHistory,
   selectBetInProgress,
-  selectParameters,
   selectStatistics,
 } from './slice/selectors';
 import { useEffect } from 'react';
@@ -36,7 +34,6 @@ export const PepePot = () => {
   const { actions: potActions } = usePepePotSlice();
   const { actions: walletActions } = useWalletSlice();
 
-  const { betAmount } = useSelector(selectParameters);
   const stats = useSelector(selectStatistics);
   const userAccount = useSelector(selectAccount);
   const betHistory = useSelector(selectBetHistory);
@@ -88,24 +85,7 @@ export const PepePot = () => {
             until someone wins and then it starts over.
           </span>
         </PotDescription>
-        <PotStatistics>
-          <PotStatisticsItem>
-            <Bold>Odds</Bold>
-            <Bold>{`${stats.currentOdds.toFixed(2)}%`}</Bold>
-          </PotStatisticsItem>
-          <PotStatisticsItem>
-            <Bold>Wagered</Bold>
-            <Bold>{stats.totalWagered.toLocaleString('en-US')}</Bold>
-          </PotStatisticsItem>
-          <PotStatisticsItem>
-            <Bold>Burned</Bold>
-            <Bold>{stats.burnAmount.toLocaleString('en-US')}</Bold>
-          </PotStatisticsItem>
-          <PotStatisticsItem>
-            <Bold>DAO</Bold>
-            <Bold>{stats.daoAmount.toLocaleString('en-US')}</Bold>
-          </PotStatisticsItem>
-        </PotStatistics>
+        <PotStatistics stats={stats} />
         <PotCTA>
           <PotCTAImage>
             <img
