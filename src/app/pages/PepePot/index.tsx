@@ -19,7 +19,11 @@ import { PotTable } from './components/PotTable';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { usePepePotSlice } from './slice';
-import { selectParameters, selectStatistics } from './slice/selectors';
+import {
+  selectBetHistory,
+  selectParameters,
+  selectStatistics,
+} from './slice/selectors';
 import { useEffect } from 'react';
 import { selectAccount } from 'app/slice/wallet/selectors';
 import { useWalletSlice } from 'app/slice/wallet';
@@ -33,6 +37,7 @@ export const PepePot = () => {
   const { betAmount } = useSelector(selectParameters);
   const stats = useSelector(selectStatistics);
   const userAccount = useSelector(selectAccount);
+  const betHistory = useSelector(selectBetHistory);
 
   const handleButtonClick = () => {
     if (userAccount) {
@@ -125,7 +130,7 @@ export const PepePot = () => {
             </span>
           </PotCTAAction>
         </PotCTA>
-        <PotTable />
+        <PotTable rows={betHistory} />
       </Content>
       <Toaster />
     </>

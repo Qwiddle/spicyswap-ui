@@ -1,3 +1,5 @@
+import { PepePotBetHistory } from '../types';
+
 /* --- STATE --- */
 export interface PepePotState {
   totalWagered: number;
@@ -10,4 +12,5 @@ export interface PepePotState {
   currentPot: number;
   pending: boolean;
   inProgress: boolean;
+  betHistory: PepePotBetHistory[];
 }

@@ -6,6 +6,14 @@ export interface PepePotStatistics {
   totalWagered: number;
 }
 
+export interface PepePotBetHistory {
+  account: string;
+  odds: string;
+  pot: number;
+  outcome: boolean;
+  operation: string;
+}
+
 export interface PepePotParameters {
   betAmount: number;
   oddsIncrease: number;

@@ -18,6 +18,8 @@ export const PEPE_DAO: string = 'KT1LyPqdRVBFdQvhjyybG5osRCXnGSrk15M5';
 export const PEPE_CONTRACT: string = 'KT1D5uTxZZ7NEjR7jD4eyYdL2iGGUWfpqms5';
 export const PEPE_TOKEN_ID: number = 0;
 
+export const HOUSE_BOT: string = 'tz1N2fc1nAvY9uRwAqBSF76pNUR4i8R99jzX';
+
 export const DAPP_NAME: string = 'PepeSwap';
 export const DAPP_ICON_URL: string =
   'https://bafybeigqka2ynrib6ytxku3nvakork5smsxni5xdqro56kd7ecsfos7z7a.ipfs.dweb.link/';

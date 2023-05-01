@@ -3,7 +3,7 @@ import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { PepePotState } from './types';
 import { pepePotSaga } from './saga';
-import { BetParameters, PepePotStatistics } from '../types';
+import { BetParameters, PepePotBetHistory, PepePotStatistics } from '../types';
 import toast from 'react-hot-toast';
 import { toastConfig } from 'app/common/toast';
 
@@ -18,6 +18,7 @@ export const initialState: PepePotState = {
   currentPot: 0,
   pending: false,
   inProgress: false,
+  betHistory: [],
 };
 
 const slice = createSlice({
@@ -30,6 +31,11 @@ const slice = createSlice({
     betExecuted(state, action: PayloadAction<boolean>) {
       if (action.payload) {
         toast.success('Bet confirmed!', {
+          ...toastConfig,
+          icon: '🐸',
+        });
+      } else {
+        toast.error('Bet failed. (probably)', {
           ...toastConfig,
           icon: '🐸',
         });
@@ -48,6 +54,9 @@ const slice = createSlice({
       state.currentOdds = currentOdds;
       state.currentPot = currentPot;
       state.totalWagered = totalWagered;
+    },
+    setBetHistory(state, action: PayloadAction<PepePotBetHistory[]>) {
+      state.betHistory = action.payload;
     },
   },
 });

@@ -9,6 +9,7 @@ import {
 } from '../util/statistics';
 import { Tezos } from 'app/services/wallet-service';
 import { PEPE_CONTRACT, POT_CONTRACT } from 'app/common/const';
+import { getPotStorageHistory } from '../util/bets';
 
 export function* getParameters() {
   try {
@@ -24,10 +25,17 @@ export function* getParameters() {
       });
     };
 
+    const getHistory = async () => {
+      const potHistory = await getPotStorageHistory();
+      return potHistory;
+    };
+
     const params = yield getParams();
+    const potHistory = yield getHistory();
 
     if (params) {
       yield put(actions.setParameters(params));
+      yield put(actions.setBetHistory(potHistory));
     }
   } catch {
     // do nothing

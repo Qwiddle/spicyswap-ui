@@ -1,8 +1,9 @@
 import { PotTable as Table } from './styles';
 import { truncateMiddle } from 'utils/user-address';
 import { TableData, TableHeading } from './types';
+import { PepePotBetHistory } from '../../types';
 
-export const PotTable = () => {
+export const PotTable = ({ rows }: { rows: PepePotBetHistory[] }) => {
   const tableHeadings: TableHeading[] = [
     {
       name: 'Account',
@@ -51,45 +52,47 @@ export const PotTable = () => {
   ];
 
   return (
-    <Table>
-      <thead>
-        <tr>
-          {tableHeadings.map(head => (
-            <>
-              <th className={`u-text-${head.align}`}>{head.name}</th>
-            </>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {operations.map(op => (
+    rows && (
+      <Table>
+        <thead>
           <tr>
-            <td className="table__account">
-              <a href="/" className="table__account-content table__link">
-                <span className="table__account-name">
-                  {truncateMiddle(op.account, 12)}
-                </span>
-              </a>
-            </td>
-            <td className="table__odds u-text-right">
-              <span className="num_negative"> {op.odds} </span>
-            </td>
-            <td className="table__limit u-text-right">{op.pot}</td>
-            <td className="table__outcome u-text-right">
-              {op.outcome ? 'WIN!' : 'Loss'}
-            </td>
-            <td className="table__transaction u-text-right">
-              <a
-                href={`https://tzkt.io/${op.operation}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {truncateMiddle(op.operation, 12)}
-              </a>
-            </td>
+            {tableHeadings.map((head, index) => (
+              <th key={`th-${index}`} className={`u-text-${head.align}`}>
+                {head.name}
+              </th>
+            ))}
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {rows.map((op, index) => (
+            <tr key={`tr-${index}`}>
+              <td className="table__account">
+                <a href="/" className="table__account-content table__link">
+                  <span className="table__account-name">
+                    {truncateMiddle(op.account, 12)}
+                  </span>
+                </a>
+              </td>
+              <td className="table__odds u-text-right">
+                <span className="num_negative"> {op.odds} </span>
+              </td>
+              <td className="table__limit u-text-right">{op.pot}</td>
+              <td className="table__outcome u-text-right">
+                {op.outcome ? 'WIN!' : 'Loss'}
+              </td>
+              <td className="table__transaction u-text-right">
+                <a
+                  href={`https://tzkt.io/${op.operation}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {truncateMiddle(op.operation, 12)}
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    )
   );
 };

@@ -24,3 +24,8 @@ export const selectParameters = createSelector(
     oddsIncrease: pepePotState.oddsIncrease,
   }),
 );
+
+export const selectBetHistory = createSelector(
+  [selectDomain],
+  pepePotState => pepePotState.betHistory,
+);
