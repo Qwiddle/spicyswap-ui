@@ -8,8 +8,8 @@ import {
   transformMetrics,
 } from '../util/statistics';
 import { Tezos } from 'app/services/wallet-service';
-import { PEPE_CONTRACT, POT_CONTRACT } from 'app/common/const';
-import { getPotStorageHistory } from '../util/bets';
+import { PEPE_CONTRACT, PEPE_TOKEN_ID, POT_CONTRACT } from 'app/common/const';
+import { getPotBets, getPotStorageHistory } from '../util/bets';
 
 export function* getParameters() {
   try {
@@ -25,17 +25,17 @@ export function* getParameters() {
       });
     };
 
-    const getHistory = async () => {
-      const potHistory = await getPotStorageHistory();
-      return potHistory;
+    const getBets = async () => {
+      const potBets = await getPotBets();
+      return potBets;
     };
 
     const params = yield getParams();
-    const potHistory = yield getHistory();
+    const potBets = yield getBets();
 
     if (params) {
       yield put(actions.setParameters(params));
-      yield put(actions.setBetHistory(potHistory));
+      yield put(actions.setBetHistory(potBets));
     }
   } catch {
     // do nothing
@@ -61,7 +61,7 @@ export function* executeBet({
             add_operator: {
               owner: userAddress,
               operator: POT_CONTRACT,
-              token_id: 0,
+              token_id: PEPE_TOKEN_ID,
             },
           },
         ]),
@@ -73,7 +73,7 @@ export function* executeBet({
             remove_operator: {
               owner: userAddress,
               operator: POT_CONTRACT,
-              token_id: 0,
+              token_id: PEPE_TOKEN_ID,
             },
           },
         ]),
