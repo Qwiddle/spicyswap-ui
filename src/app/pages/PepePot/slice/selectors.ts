@@ -34,3 +34,10 @@ export const selectIsPending = createSelector(
   [selectDomain],
   pepePotState => pepePotState.pending,
 );
+
+export const selectBetInProgress = createSelector(
+  [selectDomain],
+  pepePotState =>
+    pepePotState.betHistory.length &&
+    typeof pepePotState.betHistory[0].outcome === 'undefined',
+);

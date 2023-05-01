@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { usePepePotSlice } from './slice';
 import {
   selectBetHistory,
+  selectBetInProgress,
   selectParameters,
   selectStatistics,
 } from './slice/selectors';
@@ -39,10 +40,11 @@ export const PepePot = () => {
   const stats = useSelector(selectStatistics);
   const userAccount = useSelector(selectAccount);
   const betHistory = useSelector(selectBetHistory);
+  const betInProgress = useSelector(selectBetInProgress);
 
   const handleButtonClick = () => {
     if (userAccount) {
-      if (stats) {
+      if (stats && !betInProgress) {
         dispatch(
           potActions.executeBet({
             userAddress: userAccount.address,
@@ -62,7 +64,7 @@ export const PepePot = () => {
   useEffect(() => {
     const refetchStatTimer = setInterval(
       () => dispatch(potActions.getParameters()),
-      15000,
+      12500,
     );
 
     return () => clearInterval(refetchStatTimer);

@@ -9,7 +9,7 @@ import {
 } from '../util/statistics';
 import { Tezos } from 'app/services/wallet-service';
 import { PEPE_CONTRACT, PEPE_TOKEN_ID, POT_CONTRACT } from 'app/common/const';
-import { getPotBets, getPotStorageHistory } from '../util/bets';
+import { getPotBets } from '../util/bets';
 
 export function* getParameters() {
   try {
