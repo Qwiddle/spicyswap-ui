@@ -78,15 +78,17 @@ export const PotTable = ({ rows }: { rows: PepePotBetHistory[] }) => {
               </td>
               <td className="table__limit u-text-right">{op.pot}</td>
               <td className="table__outcome u-text-right">
-                {op.outcome ? 'WIN!' : 'Loss'}
+                {(typeof op.outcome !== 'undefined' &&
+                  (op.outcome ? 'WIN!' : 'Loss')) ||
+                  'Pending'}
               </td>
               <td className="table__transaction u-text-right">
                 <a
-                  href={`https://tzkt.io/${op.operation}`}
+                  href={`https://ghostnet.tzkt.io/${op.operation}`}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {truncateMiddle(op.operation, 12)}
+                  {op.operation && truncateMiddle(op.operation, 12)}
                 </a>
               </td>
             </tr>

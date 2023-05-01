@@ -11,13 +11,16 @@ export const getPotBets = async () => {
   const history = await getPotStorageHistory();
 
   const betsAndStorage = bets.map(bet => {
-    const storage = history.find(item => item.level === bet.lastLevel);
+    const storage = history.find(item => item.level === bet.lastLevel) || {};
     const { level, ...storageWithoutLevel } = storage;
 
     return {
       ...storageWithoutLevel,
       account: bet.value.player,
-      outcome: Object.hasOwnProperty.call(bet.value.outcome, 'win'),
+      outcome:
+        bet.value.outcome === null
+          ? undefined
+          : Object.hasOwnProperty.call(bet.value.outcome, 'win'),
     };
   });
 
