@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.f51d5156.css",
+    "main.js": "/static/js/main.335b65e7.js",
+    "static/js/886.b01248f3.chunk.js": "/static/js/886.b01248f3.chunk.js",
+    "static/js/649.4a416621.chunk.js": "/static/js/649.4a416621.chunk.js",
+    "static/js/27.601ad6b1.chunk.js": "/static/js/27.601ad6b1.chunk.js",
+    "static/js/912.ac4b1d1b.chunk.js": "/static/js/912.ac4b1d1b.chunk.js",
+    "static/media/pepeinpot.png": "/static/media/pepeinpot.49f255cd901f5c253bdf.png",
+    "static/media/pot.svg": "/static/media/pot.b143ab72b427b7c4696995007ce0cf06.svg",
+    "index.html": "/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.f51d5156.css",
+    "static/js/main.335b65e7.js"
+  ]
+}
