@@ -10,6 +10,11 @@ import {
 import { Tezos } from 'app/services/wallet-service';
 import { PEPE_CONTRACT, PEPE_TOKEN_ID, POT_CONTRACT } from 'app/common/const';
 import { getPotBets } from '../util/bets';
+import {
+  LocalStorageService,
+  StorageKeys,
+} from 'app/services/local-storage-service';
+import { PepePotStatistics } from '../types';
 
 export function* getParameters() {
   try {
@@ -36,6 +41,11 @@ export function* getParameters() {
     if (params) {
       yield put(actions.setParameters(params));
       yield put(actions.setBetHistory(potBets));
+
+      const storageService = new LocalStorageService();
+
+      storageService.setItem(StorageKeys.potStatistics, params);
+      storageService.setItem(StorageKeys.betHistory, potBets);
     }
   } catch {
     // do nothing

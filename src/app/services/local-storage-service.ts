@@ -2,6 +2,8 @@ export enum StorageKeys {
   tokenMetadata = 'tokenMetadata',
   swapPair = 'swapPair',
   userSettings = 'userSettings',
+  betHistory = 'betHistory',
+  potStatistics = 'potStatistics',
 }
 
 export class LocalStorageService {

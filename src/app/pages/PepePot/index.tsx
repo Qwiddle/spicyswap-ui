@@ -11,6 +11,11 @@ import { Toaster } from 'react-hot-toast';
 import { PotCTA } from './components/PotCTA';
 import { PotHeader } from './components/PotHeader/styles';
 import { PotDescription } from './components/PotDescription/styles';
+import {
+  LocalStorageService,
+  StorageKeys,
+} from 'app/services/local-storage-service';
+import { PepePotBetHistory, PepePotStatistics } from './types';
 
 export const PepePot = () => {
   const dispatch = useDispatch();
@@ -20,7 +25,24 @@ export const PepePot = () => {
   const stats = useSelector(selectStatistics);
   const betHistory = useSelector(selectBetHistory);
 
+  const storageService = new LocalStorageService();
+
   useEffect(() => {
+    const localPotParameters = storageService.getItem<PepePotStatistics>(
+      StorageKeys.potStatistics,
+    );
+
+    const localBetHistory = storageService.getItem<PepePotBetHistory[]>(
+      StorageKeys.betHistory,
+    );
+
+    console.log({ localPotParameters, localBetHistory });
+
+    if (localBetHistory && localPotParameters) {
+      dispatch(potActions.setParameters(localPotParameters));
+      dispatch(potActions.setBetHistory(localBetHistory));
+    }
+
     dispatch(potActions.getParameters());
     dispatch(walletActions.getActiveAccount());
     // eslint-disable-next-line react-hooks/exhaustive-deps
