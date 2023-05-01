@@ -41,12 +41,12 @@ export function NavBarContent({
       alt: 'Pepe Pot Page',
       icon: <UilFlaskPotion />,
     },
-    {
+    /*{
       url: '/swap',
       name: 'Swap',
       alt: 'Swap Page',
       icon: <UilUsdCircle />,
-    },
+    },*/
   ];
 
   return (
