@@ -16,3 +16,11 @@ export const selectStatistics = createSelector(
     totalWagered: pepePotState.totalWagered,
   }),
 );
+
+export const selectParameters = createSelector(
+  [selectDomain],
+  pepePotState => ({
+    betAmount: pepePotState.betAmount,
+    oddsIncrease: pepePotState.oddsIncrease,
+  }),
+);

@@ -19,22 +19,48 @@ import { PotTable } from './components/PotTable';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { usePepePotSlice } from './slice';
-import { selectStatistics } from './slice/selectors';
+import { selectParameters, selectStatistics } from './slice/selectors';
 import { useEffect } from 'react';
+import { selectAccount } from 'app/slice/wallet/selectors';
+import { useWalletSlice } from 'app/slice/wallet';
+import { Toaster } from 'react-hot-toast';
 
 export const PepePot = () => {
   const dispatch = useDispatch();
-  const { actions } = usePepePotSlice();
+  const { actions: potActions } = usePepePotSlice();
+  const { actions: walletActions } = useWalletSlice();
 
+  const { betAmount } = useSelector(selectParameters);
   const stats = useSelector(selectStatistics);
+  const userAccount = useSelector(selectAccount);
 
   const handleButtonClick = () => {
-    //todo
+    if (userAccount) {
+      if (stats) {
+        dispatch(
+          potActions.executeBet({
+            userAddress: userAccount.address,
+          }),
+        );
+      }
+    } else {
+      dispatch(walletActions.connectWallet());
+    }
   };
 
   useEffect(() => {
-    dispatch(actions.getStatistics());
-  }, [dispatch, actions]);
+    dispatch(potActions.getParameters());
+    dispatch(walletActions.getActiveAccount());
+  }, []);
+
+  useEffect(() => {
+    const refetchStatTimer = setInterval(
+      () => dispatch(potActions.getParameters()),
+      15000,
+    );
+
+    return () => clearInterval(refetchStatTimer);
+  }, [dispatch, potActions]);
 
   return (
     <>
@@ -101,6 +127,7 @@ export const PepePot = () => {
         </PotCTA>
         <PotTable />
       </Content>
+      <Toaster />
     </>
   );
 };

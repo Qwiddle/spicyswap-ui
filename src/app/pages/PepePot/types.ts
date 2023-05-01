@@ -5,3 +5,12 @@ export interface PepePotStatistics {
   currentPot: number;
   totalWagered: number;
 }
+
+export interface PepePotParameters {
+  betAmount: number;
+  oddsIncrease: number;
+}
+
+export interface BetParameters {
+  userAddress: string;
+}

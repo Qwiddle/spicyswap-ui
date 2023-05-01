@@ -16,6 +16,7 @@ export const POT_CONTRACT: string = 'KT1RxiuiQWE8Wc1mXh8uRNxLizK5VQoM6rGo';
 export const POT_BURNER: string = 'KT1CZMurPAjSfZqcn6LBUNUhG4byE6AJgDT6';
 export const PEPE_DAO: string = 'KT1LyPqdRVBFdQvhjyybG5osRCXnGSrk15M5';
 export const PEPE_CONTRACT: string = 'KT1D5uTxZZ7NEjR7jD4eyYdL2iGGUWfpqms5';
+export const PEPE_TOKEN_ID: number = 0;
 
 export const DAPP_NAME: string = 'PepeSwap';
 export const DAPP_ICON_URL: string =
@@ -27,7 +28,7 @@ export const GHOSTNET: NetworkType = NetworkType.GHOSTNET;
 
 export const DEFAULT_RPCS: Partial<Record<NetworkType, string>> = {
   mainnet: 'https://mainnet.api.tez.ie',
-  ghostnet: 'https://ghostnet.ecadinfra.com',
+  ghostnet: 'https://ghostnet.smartpy.io/',
 };
 
 export const dappOptions: DAppClientOptions = {

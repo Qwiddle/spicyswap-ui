@@ -7,17 +7,41 @@ import {
 } from 'app/common/const';
 import { rawToBalance } from 'utils/spicy';
 
-export const getPotStatistics = async () => {
+export const getPotStorage = async () => {
   const requestUrl = `${TZKT_API_GHOSTNET_URL}contracts/${POT_CONTRACT}/storage`;
 
   const res = await fetch(requestUrl);
-  const json = await res.json();
+  const storage = await res.json();
 
-  const { curr_odds, pot } = json;
+  return storage;
+};
+
+export const getPotStatistics = ({ storage }) => {
+  const { curr_odds, pot } = storage;
 
   return {
     curr_odds,
     pot,
+  };
+};
+
+export const getPotParameters = ({ storage }) => {
+  const {
+    settings: { bet_amount, odds_increase },
+  } = storage;
+
+  return { bet_amount, odds_increase };
+};
+
+export const getPepePot = async () => {
+  const storage = await getPotStorage();
+
+  const potParameters = getPotParameters({ storage });
+  const potStatistics = getPotStatistics({ storage });
+
+  return {
+    ...potParameters,
+    ...potStatistics,
   };
 };
 
@@ -50,16 +74,18 @@ export const transformWagered = (transfers: any) => {
 };
 
 export const transformMetrics = (metrics: any) => {
-  const { curr_odds, pot, totalWagered } = metrics;
+  const { curr_odds, pot, wagered, oddsIncrease, betAmount } = metrics;
   const daoAmount = metrics[PEPE_DAO];
   const burnAmount = metrics[POT_BURNER];
 
   return {
     burnAmount: rawToBalance(burnAmount, 2),
     daoAmount: rawToBalance(daoAmount, 2),
-    currentOdds: rawToBalance(Number(curr_odds), 2),
+    currentOdds: rawToBalance(Number(curr_odds), 1),
     currentPot: rawToBalance(Number(pot), 2),
-    totalWagered: rawToBalance(totalWagered, 2),
+    totalWagered: rawToBalance(wagered, 2),
+    betAmount: rawToBalance(Number(betAmount), 2),
+    oddsIncrease: rawToBalance(Number(oddsIncrease), 1),
   };
 };
 

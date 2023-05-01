@@ -1,35 +1,82 @@
 import { put, takeLatest } from 'redux-saga/effects';
+import { randomBytes } from 'crypto';
 import { pepePotActions as actions } from '.';
 import {
   getContributions,
-  getPotStatistics,
+  getPepePot,
   getWagered,
   transformMetrics,
 } from '../util/statistics';
+import { Tezos } from 'app/services/wallet-service';
+import { PEPE_CONTRACT, POT_CONTRACT } from 'app/common/const';
 
-export function* getStatistics() {
+export function* getParameters() {
   try {
-    const getStats = async () => {
-      const statistics = await getPotStatistics();
+    const getParams = async () => {
+      const pepePotParams = await getPepePot();
       const contributions = await getContributions();
       const wagered = await getWagered();
 
-      if (statistics) {
-        return transformMetrics({
-          ...contributions,
-          ...statistics,
-          totalWagered: wagered,
-        });
-      }
+      return transformMetrics({
+        ...contributions,
+        ...pepePotParams,
+        wagered,
+      });
     };
 
-    const stats = yield getStats();
+    const params = yield getParams();
 
-    if (stats) {
-      yield put(actions.setStatistics(stats));
+    if (params) {
+      yield put(actions.setParameters(params));
     }
   } catch {
     // do nothing
+  }
+}
+
+export function* executeBet({
+  payload,
+}: ReturnType<typeof actions.executeBet>) {
+  const { userAddress } = payload;
+
+  try {
+    const potContract = yield Tezos.wallet.at(POT_CONTRACT);
+    const tokenContract = yield Tezos.wallet.at(PEPE_CONTRACT);
+
+    const seed = randomBytes(32).toString('hex');
+
+    const batch = yield Tezos.wallet
+      .batch()
+      .withContractCall(
+        tokenContract.methods.update_operators([
+          {
+            add_operator: {
+              owner: userAddress,
+              operator: POT_CONTRACT,
+              token_id: 0,
+            },
+          },
+        ]),
+      )
+      .withContractCall(potContract.methods.bet(seed))
+      .withContractCall(
+        tokenContract.methods.update_operators([
+          {
+            remove_operator: {
+              owner: userAddress,
+              operator: POT_CONTRACT,
+              token_id: 0,
+            },
+          },
+        ]),
+      )
+      .send();
+
+    yield batch.confirmation();
+    yield put(actions.betExecuted(true));
+  } catch (e) {
+    yield put(actions.betExecuted(false));
+    console.log(e);
   }
 }
 
@@ -37,5 +84,6 @@ export function* getStatistics() {
  * Root saga manages watcher lifecycle
  */
 export function* pepePotSaga() {
-  yield takeLatest(actions.getStatistics.type, getStatistics);
+  yield takeLatest(actions.getParameters.type, getParameters);
+  yield takeLatest(actions.executeBet.type, executeBet);
 }
