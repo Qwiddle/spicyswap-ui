@@ -1,5 +1,4 @@
 import { POT_CONTRACT, TZKT_API_GHOSTNET_URL } from 'app/common/const';
-import { P } from 'app/components/P';
 import { rawToBalance } from 'utils/spicy';
 
 export const getPotBets = async () => {

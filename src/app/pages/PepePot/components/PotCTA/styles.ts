@@ -1,26 +1,6 @@
 import { ConnectButton } from 'app/components/ConnectButton';
-import { HeaderText } from 'app/components/HeaderText';
-import styled from 'styled-components';
 import { media } from 'styles/media';
-
-export const PotHeader = styled(HeaderText)`
-  font-size: 2rem;
-  color: ${p => p.theme.text};
-  font-weight: 600;
-`;
-
-export const PotDescription = styled.div`
-  text-align: center;
-  padding: 0 1rem;
-  color: ${p => p.theme.textSecondary};
-  gap: 1rem;
-  display: flex;
-  flex-direction: column;
-
-  ${media.small} {
-    width: 600px;
-  }
-`;
+import styled from 'styled-components';
 
 export const PotCTA = styled.div`
   display: flex;
@@ -102,8 +82,4 @@ export const PotCTAButton = styled(ConnectButton)`
   height: 50px;
   color: ${p => p.theme.textSecondary};
   max-width: 300px;
-`;
-
-export const PotTableWrapper = styled.div`
-  width: 100%;
 `;
