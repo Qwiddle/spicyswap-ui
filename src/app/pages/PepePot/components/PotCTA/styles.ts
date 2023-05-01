@@ -11,6 +11,7 @@ export const PotCTA = styled.div`
 
   ${media.small} {
     flex-direction: row;
+    margin-left: 1rem;
   }
 `;
 
