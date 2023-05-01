@@ -1,6 +1,6 @@
 import { PotTable as Table } from './styles';
 import { truncateMiddle } from 'utils/user-address';
-import { TableData, TableHeading } from './types';
+import { TableHeading } from './types';
 import { PepePotBetHistory } from '../../types';
 
 export const PotTable = ({ rows }: { rows: PepePotBetHistory[] }) => {
@@ -24,30 +24,6 @@ export const PotTable = ({ rows }: { rows: PepePotBetHistory[] }) => {
     {
       name: 'Transaction ID',
       align: 'right',
-    },
-  ];
-
-  const operations: TableData[] = [
-    {
-      account: 'tz1RLomvUivaCNUmec7gALquhGMu5PgzMvkP',
-      odds: '65%',
-      pot: 140000,
-      outcome: true,
-      operation: 'opD5Ng7GsK1bJbvuLzNzjDX3vA6chetVnhgEn1kZ6VweefMNhoY',
-    },
-    {
-      account: 'tz1RLomvUivaCNUmec7gALquhGMu5PgzMvkP',
-      odds: '60%',
-      pot: 135000,
-      outcome: false,
-      operation: 'opD5Ng7GsK1bJbvuLzNzjDX3vA6chetVnhgEn1kZ6VweefMNhoY',
-    },
-    {
-      account: 'tz1RLomvUivaCNUmec7gALquhGMu5PgzMvkP',
-      odds: '55%',
-      pot: 130000,
-      outcome: false,
-      operation: 'opD5Ng7GsK1bJbvuLzNzjDX3vA6chetVnhgEn1kZ6VweefMNhoY',
     },
   ];
 
