@@ -18,6 +18,7 @@ export const PotCTAImage = styled.div`
   display: flex;
   justify-content: center;
   user-select: none;
+  min-width: 220px;
 `;
 
 export const PotCTACounter = styled.div`
