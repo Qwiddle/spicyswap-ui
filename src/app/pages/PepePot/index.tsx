@@ -28,6 +28,7 @@ import { useEffect } from 'react';
 import { selectAccount } from 'app/slice/wallet/selectors';
 import { useWalletSlice } from 'app/slice/wallet';
 import { Toaster } from 'react-hot-toast';
+import { PotButtonContent } from './components/PotButtonContent';
 
 export const PepePot = () => {
   const dispatch = useDispatch();
@@ -122,7 +123,7 @@ export const PepePot = () => {
           <PotCTAAction>
             <span>Placing a bet will wager 10,000 $PEPE.</span>
             <PotCTAButton onClick={handleButtonClick}>
-              Place your bet 🐸
+              <PotButtonContent />
             </PotCTAButton>
             <span>
               If you lose, 75% of your $PEPE are added to the pot, 12.5% is put

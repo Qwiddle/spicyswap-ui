@@ -131,9 +131,9 @@ export const PotCTAAction = styled.div`
 `;
 
 export const PotCTAButton = styled(ConnectButton)`
-  height: 40px;
+  height: 50px;
   color: ${p => p.theme.textSecondary};
-  width: 200px;
+  max-width: 300px;
 `;
 
 export const PotTableWrapper = styled.div`

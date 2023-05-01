@@ -29,3 +29,8 @@ export const selectBetHistory = createSelector(
   [selectDomain],
   pepePotState => pepePotState.betHistory,
 );
+
+export const selectIsPending = createSelector(
+  [selectDomain],
+  pepePotState => pepePotState.pending,
+);
