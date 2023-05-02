@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/spicyswap-ui/static/css/main.f51d5156.css",
-    "main.js": "/spicyswap-ui/static/js/main.971c48f3.js",
+    "main.js": "/spicyswap-ui/static/js/main.42a4163f.js",
     "static/js/886.b01248f3.chunk.js": "/spicyswap-ui/static/js/886.b01248f3.chunk.js",
-    "static/js/653.25638639.chunk.js": "/spicyswap-ui/static/js/653.25638639.chunk.js",
+    "static/js/171.bfd4eec8.chunk.js": "/spicyswap-ui/static/js/171.bfd4eec8.chunk.js",
     "static/js/27.601ad6b1.chunk.js": "/spicyswap-ui/static/js/27.601ad6b1.chunk.js",
-    "static/js/912.ac4b1d1b.chunk.js": "/spicyswap-ui/static/js/912.ac4b1d1b.chunk.js",
+    "static/js/746.20cfd538.chunk.js": "/spicyswap-ui/static/js/746.20cfd538.chunk.js",
     "static/media/pepeinpot.png": "/spicyswap-ui/static/media/pepeinpot.49f255cd901f5c253bdf.png",
     "static/media/pot.svg": "/spicyswap-ui/static/media/pot.b143ab72b427b7c4696995007ce0cf06.svg",
     "index.html": "/spicyswap-ui/index.html"
   },
   "entrypoints": [
     "static/css/main.f51d5156.css",
-    "static/js/main.971c48f3.js"
+    "static/js/main.42a4163f.js"
   ]
 }
