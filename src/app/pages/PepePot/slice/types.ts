@@ -13,4 +13,6 @@ export interface PepePotState {
   pending: boolean;
   inProgress: boolean;
   betHistory: PepePotBetHistory[];
+  betFinished: boolean;
+  betStatus: 'win' | 'lose' | '';
 }

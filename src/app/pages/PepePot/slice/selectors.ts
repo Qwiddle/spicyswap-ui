@@ -41,3 +41,13 @@ export const selectBetInProgress = createSelector(
     pepePotState.betHistory.length &&
     typeof pepePotState.betHistory[0].outcome === 'undefined',
 );
+
+export const selectIsBetFinished = createSelector(
+  [selectDomain],
+  pepePotState => pepePotState.betFinished,
+);
+
+export const selectBetStatus = createSelector(
+  [selectDomain],
+  pepePotState => pepePotState.betStatus,
+);

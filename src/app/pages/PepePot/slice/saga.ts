@@ -14,7 +14,6 @@ import {
   LocalStorageService,
   StorageKeys,
 } from 'app/services/local-storage-service';
-import { PepePotStatistics } from '../types';
 
 export function* getParameters() {
   try {
@@ -91,6 +90,7 @@ export function* executeBet({
       .send();
 
     yield batch.confirmation();
+
     yield put(actions.betExecuted(true));
   } catch (e) {
     yield put(actions.betExecuted(false));

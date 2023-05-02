@@ -19,6 +19,8 @@ export const initialState: PepePotState = {
   pending: false,
   inProgress: false,
   betHistory: [],
+  betFinished: false,
+  betStatus: 'win',
 };
 
 const slice = createSlice({
@@ -59,6 +61,18 @@ const slice = createSlice({
     },
     setBetHistory(state, action: PayloadAction<PepePotBetHistory[]>) {
       state.betHistory = action.payload;
+    },
+    betLost(state) {
+      state.betFinished = true;
+      state.betStatus = 'lose';
+    },
+    betWin(state) {
+      state.betFinished = true;
+      state.betStatus = 'win';
+    },
+    resetBet(state) {
+      state.betFinished = false;
+      state.betStatus = '';
     },
   },
 });

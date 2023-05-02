@@ -1,6 +1,6 @@
 import { AccountInfo } from '@airgap/beacon-types/dist/esm/types/AccountInfo';
 import { BeaconWallet } from '@taquito/beacon-wallet';
-import { TezosToolkit } from '@taquito/taquito';
+import { PollingSubscribeProvider, TezosToolkit } from '@taquito/taquito';
 import {
   dappOptions,
   DEFAULT_NETWORK_TYPE,
@@ -13,6 +13,13 @@ import {
 export const Tezos = new TezosToolkit(DEFAULT_RPCS.ghostnet as string);
 export const beacon = new BeaconWallet(pepePotDappOptions);
 Tezos.setWalletProvider(beacon);
+
+Tezos.setStreamProvider(
+  Tezos.getFactory(PollingSubscribeProvider)({
+    shouldObservableSubscriptionRetry: true,
+    pollingIntervalMilliseconds: 1500,
+  }),
+);
 
 export async function requestPermissions(): Promise<AccountInfo | undefined> {
   await beacon.requestPermissions({
