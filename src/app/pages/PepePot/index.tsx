@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { usePepePotSlice } from './slice';
 import {
   selectBetHistory,
-  selectBetInProgress,
   selectBetStatus,
   selectIsBetFinished,
+  selectIsPending,
   selectStatistics,
 } from './slice/selectors';
 import { useEffect } from 'react';
@@ -35,12 +35,12 @@ export const PepePot = () => {
   const betHistory = useSelector(selectBetHistory);
   const isBetFinished = useSelector(selectIsBetFinished);
   const betStatus = useSelector(selectBetStatus);
-  const betInProgress = useSelector(selectBetInProgress);
+  const isPending = useSelector(selectIsPending);
 
   const storageService = new LocalStorageService();
 
   useEffect(() => {
-    if (betInProgress) {
+    if (isPending) {
       const sub = Tezos.stream.subscribeEvent({
         address: POT_CONTRACT,
       });
@@ -55,7 +55,23 @@ export const PepePot = () => {
         }
       });
     }
-  }, [betInProgress]);
+  }, [isPending]);
+
+  useEffect(() => {
+    const sub = Tezos.stream.subscribeEvent({
+      address: POT_CONTRACT,
+    });
+
+    sub.on('data', event => {
+      if (event.tag === 'bet') {
+        dispatch(potActions.setCurrentBet(true));
+      }
+
+      if (event.tag === 'reveal') {
+        dispatch(potActions.setCurrentBet(false));
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const localPotParameters = storageService.getItem<PepePotStatistics>(

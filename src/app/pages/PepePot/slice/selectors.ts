@@ -37,9 +37,7 @@ export const selectIsPending = createSelector(
 
 export const selectBetInProgress = createSelector(
   [selectDomain],
-  pepePotState =>
-    pepePotState.betHistory.length &&
-    typeof pepePotState.betHistory[0].outcome === 'undefined',
+  pepePotState => pepePotState.currentBet,
 );
 
 export const selectIsBetFinished = createSelector(

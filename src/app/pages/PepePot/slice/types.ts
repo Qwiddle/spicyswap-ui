@@ -1,4 +1,4 @@
-import { PepePotBetHistory } from '../types';
+import { PepePotBet, PepePotBetHistory } from '../types';
 
 /* --- STATE --- */
 export interface PepePotState {
@@ -15,4 +15,5 @@ export interface PepePotState {
   betHistory: PepePotBetHistory[];
   betFinished: boolean;
   betStatus: 'win' | 'lose' | '';
+  currentBet: PepePotBet | boolean;
 }

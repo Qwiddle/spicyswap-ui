@@ -22,3 +22,7 @@ export interface PepePotParameters {
 export interface BetParameters {
   userAddress: string;
 }
+
+export interface PepePotBet extends BetParameters {
+  number: string;
+}
