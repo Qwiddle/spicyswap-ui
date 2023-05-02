@@ -39,7 +39,9 @@ export const PotModal = ({
           <ConnectButton onClick={handleButtonClick}>Return</ConnectButton>
         </PotModalCard>
       </Modal>
-      {betStatus === 'win' && <Confetti />}
+      <div style={{ position: 'absolute', zIndex: '100' }}>
+        {betStatus === 'win' && <Confetti />}
+      </div>
     </>
   );
 };

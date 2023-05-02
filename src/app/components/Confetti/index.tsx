@@ -1,9 +1,9 @@
-import { useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import type { Container, Engine } from 'tsparticles-engine';
 import Particles from 'react-particles';
 import { loadFull } from 'tsparticles';
 
-export const Confetti = () => {
+export const Confetti = memo(() => {
   const particlesInit = useCallback(async (engine: Engine) => {
     // you can initialize the tsParticles instance (engine) here, adding custom shapes or presets
     // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
@@ -136,4 +136,4 @@ export const Confetti = () => {
       }}
     />
   );
-};
+});
