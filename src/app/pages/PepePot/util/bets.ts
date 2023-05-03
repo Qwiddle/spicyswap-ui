@@ -11,10 +11,13 @@ export const getPotBets = async () => {
 
   const betsAndStorage = bets.map(bet => {
     const storage = history.find(item => item.level === bet.lastLevel) || {};
+    const indexOfStorage = history.indexOf(storage);
+
     const { level, ...storageWithoutLevel } = storage;
 
     return {
       ...storageWithoutLevel,
+      pot: history[indexOfStorage + 1]?.pot || 0,
       account: bet.value.player,
       outcome:
         bet.value.outcome === null
