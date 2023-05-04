@@ -61,7 +61,7 @@ export const PotCTA = ({
       </PotCTAImage>
       <PotCTAAction>
         <span>Placing a bet will wager 10,000 $PEPE.</span>
-        <span>PEPE balance: {balance}</span>
+        <span>{balance && `PEPE balance: ${balance}`}</span>
         <PotCTAButton onClick={handleButtonClick}>
           <PotButtonContent />
         </PotCTAButton>
