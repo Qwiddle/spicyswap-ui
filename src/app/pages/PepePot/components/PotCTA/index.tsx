@@ -10,14 +10,20 @@ import {
 } from './styles';
 import pot from './assets/pot.svg';
 import pepeInPot from './assets/pepeinpot.png';
-import { PepePotStatistics } from '../../types';
+import { PepePotStatistics, TokenBalance } from '../../types';
 import { walletActions } from 'app/slice/wallet';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectBetInProgress } from '../../slice/selectors';
 import { selectAccount } from 'app/slice/wallet/selectors';
 import { usePepePotSlice } from '../../slice';
 
-export const PotCTA = ({ stats }: { stats: PepePotStatistics }) => {
+export const PotCTA = ({
+  stats,
+  balance,
+}: {
+  stats: PepePotStatistics;
+  balance?: number;
+}) => {
   const betInProgress = useSelector(selectBetInProgress);
   const userAccount = useSelector(selectAccount);
   const dispatch = useDispatch();
@@ -55,6 +61,7 @@ export const PotCTA = ({ stats }: { stats: PepePotStatistics }) => {
       </PotCTAImage>
       <PotCTAAction>
         <span>Placing a bet will wager 10,000 $PEPE.</span>
+        <span>PEPE balance: {balance}</span>
         <PotCTAButton onClick={handleButtonClick}>
           <PotButtonContent />
         </PotCTAButton>

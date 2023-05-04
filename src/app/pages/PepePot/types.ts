@@ -26,3 +26,8 @@ export interface BetParameters {
 export interface PepePotBet extends BetParameters {
   number: string;
 }
+
+export interface TokenBalance {
+  balance: number;
+  token: string;
+}

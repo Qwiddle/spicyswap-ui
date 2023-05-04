@@ -1,4 +1,4 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { call, put, take, takeLatest } from 'redux-saga/effects';
 import { randomBytes } from 'crypto-browserify';
 import { pepePotActions as actions } from '.';
 import {
@@ -8,12 +8,19 @@ import {
   transformMetrics,
 } from '../util/statistics';
 import { Tezos } from 'app/services/wallet-service';
-import { PEPE_CONTRACT, PEPE_TOKEN_ID, POT_CONTRACT } from 'app/common/const';
+import {
+  PEPE_CONTRACT,
+  PEPE_TOKEN_ID,
+  POT_CONTRACT,
+  TZKT_API_GHOSTNET_URL,
+} from 'app/common/const';
 import { getPotBets } from '../util/bets';
 import {
   LocalStorageService,
   StorageKeys,
 } from 'app/services/local-storage-service';
+import { request } from 'utils/request';
+import { rawToBalance } from 'utils/spicy';
 
 export function* getParameters() {
   try {
@@ -98,10 +105,37 @@ export function* executeBet({
   }
 }
 
+//todo: just use swap token balance actions and remove this
+export function* getTokenBalance({
+  payload,
+}: ReturnType<typeof actions.getTokenBalance>) {
+  try {
+    const { token, userAddress } = payload;
+
+    const tokenContract = token.split(':')[0];
+    const tokenId = token.split(':')[1] === 'null' ? 0 : token.split(':')[1];
+
+    const requestURL = `${TZKT_API_GHOSTNET_URL}tokens/balances?account=${userAddress}&token.contract=${tokenContract}&token.tokenId=${tokenId}`;
+
+    const balances = yield call(request, requestURL);
+    const balance = rawToBalance(Number(balances[0]?.balance), 2) || 0;
+
+    yield put(
+      actions.setBalance({
+        token,
+        balance,
+      }),
+    );
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 /**
  * Root saga manages watcher lifecycle
  */
 export function* pepePotSaga() {
   yield takeLatest(actions.getParameters.type, getParameters);
   yield takeLatest(actions.executeBet.type, executeBet);
+  yield takeLatest(actions.getTokenBalance.type, getTokenBalance);
 }

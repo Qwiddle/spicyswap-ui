@@ -21,7 +21,8 @@ export const initialState: PepePotState = {
   betHistory: [],
   betFinished: false,
   betStatus: 'win',
-  currentBet: false,
+  currentBet: null,
+  balance: [],
 };
 
 const slice = createSlice({
@@ -77,6 +78,24 @@ const slice = createSlice({
     },
     setCurrentBet(state, action: PayloadAction<any>) {
       state.currentBet = action.payload;
+    },
+    getTokenBalance(
+      state,
+      action: PayloadAction<{ userAddress: string; token: string }>,
+    ) {},
+    setBalance(
+      state,
+      action: PayloadAction<{ token: string; balance: number }>,
+    ) {
+      const prevBalance = state.balance.findIndex(
+        b => b.token === action.payload.token,
+      );
+
+      if (prevBalance !== -1) {
+        state.balance[prevBalance] = action.payload;
+      } else {
+        state.balance = [...state.balance, action.payload];
+      }
     },
   },
 });

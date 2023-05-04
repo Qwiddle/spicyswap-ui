@@ -64,7 +64,7 @@ export const PotCTAAction = styled.div`
   padding: 1rem;
   border-radius: 1rem;
   max-width: 425px;
-  font-size: 1.25rem;
+  font-size: 12px;
   gap: 1.5rem;
 
   ${media.small} {
@@ -75,8 +75,8 @@ export const PotCTAAction = styled.div`
     padding: 2rem;
   }
 
-  span:last-of-type {
-    font-size: 12px;
+  span:first-of-type {
+    font-size: 1.25rem;
   }
 `;
 

@@ -2,6 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import { RootState } from 'types';
 import { initialState } from '.';
+import { PEPE_CONTRACT, PEPE_TOKEN_ID } from 'app/common/const';
 
 // First select the relevant part from the state
 const selectDomain = (state: RootState) => state.pepePot || initialState;
@@ -48,4 +49,12 @@ export const selectIsBetFinished = createSelector(
 export const selectBetStatus = createSelector(
   [selectDomain],
   pepePotState => pepePotState.betStatus,
+);
+
+export const selectBalance = createSelector(
+  [selectDomain],
+  pepePotState =>
+    pepePotState.balance.find(
+      b => b.token === `${PEPE_CONTRACT}:${PEPE_TOKEN_ID}`,
+    )?.balance,
 );
