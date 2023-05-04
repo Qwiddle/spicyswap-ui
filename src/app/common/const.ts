@@ -30,7 +30,7 @@ export const GHOSTNET: NetworkType = NetworkType.GHOSTNET;
 
 export const DEFAULT_RPCS: Partial<Record<NetworkType, string>> = {
   mainnet: 'https://mainnet.api.tez.ie',
-  ghostnet: 'https://ghostnet.smartpy.io/',
+  ghostnet: 'https://ghostnet.tezos.marigold.dev/',
 };
 
 export const dappOptions: DAppClientOptions = {
