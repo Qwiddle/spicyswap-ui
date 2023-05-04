@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { usePepePotSlice } from './slice';
 import {
+  selectBalance,
   selectBetHistory,
   selectBetStatus,
   selectIsBetFinished,
@@ -24,7 +25,7 @@ import {
 import { PepePotBetHistory, PepePotStatistics } from './types';
 import { PotModal } from './components/PotModal';
 import { Tezos } from 'app/services/wallet-service';
-import { POT_CONTRACT } from 'app/common/const';
+import { PEPE_CONTRACT, PEPE_TOKEN_ID, POT_CONTRACT } from 'app/common/const';
 import { bytesToPkh } from 'utils/address';
 import { selectBetInProgress } from './slice/selectors';
 import { selectAccount } from 'app/slice/wallet/selectors';
@@ -40,6 +41,7 @@ export const PepePot = () => {
   const betStatus = useSelector(selectBetStatus);
   const betInProgress = useSelector(selectBetInProgress);
   const account = useSelector(selectAccount);
+  const balance = useSelector(selectBalance);
 
   const storageService = new LocalStorageService();
 
@@ -49,21 +51,6 @@ export const PepePot = () => {
     });
 
     sub.on('data', event => {
-      if (event.tag === 'bet') {
-        if (event?.payload) {
-          const pendingBet = {
-            userAddress: bytesToPkh(event?.payload[1].bytes),
-            number: event?.payload[0].int,
-          };
-
-          dispatch(potActions.setCurrentBet(pendingBet));
-        }
-      }
-
-      if (event.tag === 'reveal') {
-        dispatch(potActions.setCurrentBet(false));
-      }
-
       if (event.tag === 'win' || event.tag === 'lose') {
         if (betInProgress?.userAddress === account?.address) {
           const action =
@@ -71,13 +58,40 @@ export const PepePot = () => {
 
           dispatch(action);
         }
+
+        dispatch(potActions.setCurrentBet(null));
+        sub.close();
       }
     });
-  }, []);
+  }, [betInProgress]);
+
+  useEffect(() => {
+    const sub = Tezos.stream.subscribeEvent({
+      address: POT_CONTRACT,
+    });
+
+    sub.on('data', event => {
+      if (event.tag === 'bet') {
+        if (event?.payload) {
+          dispatch(
+            potActions.setCurrentBet({
+              userAddress: bytesToPkh(event?.payload[1].bytes),
+              number: event?.payload[0].int,
+            }),
+          );
+        }
+      }
+    });
+  }, [account]);
 
   useEffect(() => {
     if (betHistory.length && typeof betHistory[0].outcome === 'undefined') {
-      dispatch(potActions.setCurrentBet(true));
+      dispatch(
+        potActions.setCurrentBet({
+          userAddress: betHistory[0].account,
+          number: 0,
+        }),
+      );
     }
   }, [betHistory, dispatch, potActions]);
 
@@ -99,6 +113,17 @@ export const PepePot = () => {
     dispatch(walletActions.getActiveAccount());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (account) {
+      dispatch(
+        potActions.getTokenBalance({
+          userAddress: account?.address,
+          token: `${PEPE_CONTRACT}:${PEPE_TOKEN_ID}`,
+        }),
+      );
+    }
+  }, [account]);
 
   useEffect(() => {
     const refetchStatTimer = setInterval(
@@ -128,7 +153,7 @@ export const PepePot = () => {
           </span>
         </PotDescription>
         <PotStatistics stats={stats} />
-        <PotCTA stats={stats} />
+        <PotCTA stats={stats} balance={balance} />
         <PotTable rows={betHistory} />
       </Content>
       <Toaster />
