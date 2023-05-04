@@ -15,5 +15,5 @@ export interface PepePotState {
   betHistory: PepePotBetHistory[];
   betFinished: boolean;
   betStatus: 'win' | 'lose' | '';
-  currentBet: PepePotBet | boolean;
+  currentBet: PepePotBet | null;
 }

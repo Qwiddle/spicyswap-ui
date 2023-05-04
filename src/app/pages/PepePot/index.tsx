@@ -25,6 +25,9 @@ import { PepePotBetHistory, PepePotStatistics } from './types';
 import { PotModal } from './components/PotModal';
 import { Tezos } from 'app/services/wallet-service';
 import { POT_CONTRACT } from 'app/common/const';
+import { bytesToPkh } from 'utils/address';
+import { selectBetInProgress } from './slice/selectors';
+import { selectAccount } from 'app/slice/wallet/selectors';
 
 export const PepePot = () => {
   const dispatch = useDispatch();
@@ -35,27 +38,10 @@ export const PepePot = () => {
   const betHistory = useSelector(selectBetHistory);
   const isBetFinished = useSelector(selectIsBetFinished);
   const betStatus = useSelector(selectBetStatus);
-  const isPending = useSelector(selectIsPending);
+  const betInProgress = useSelector(selectBetInProgress);
+  const account = useSelector(selectAccount);
 
   const storageService = new LocalStorageService();
-
-  useEffect(() => {
-    if (isPending) {
-      const sub = Tezos.stream.subscribeEvent({
-        address: POT_CONTRACT,
-      });
-
-      sub.on('data', event => {
-        if (event.tag === 'win' || event.tag === 'lose') {
-          const action =
-            event.tag === 'win' ? potActions.betWin() : potActions.betLost();
-
-          dispatch(action);
-          sub.close();
-        }
-      });
-    }
-  }, [isPending]);
 
   useEffect(() => {
     const sub = Tezos.stream.subscribeEvent({
@@ -64,14 +50,36 @@ export const PepePot = () => {
 
     sub.on('data', event => {
       if (event.tag === 'bet') {
-        dispatch(potActions.setCurrentBet(true));
+        if (event?.payload) {
+          const pendingBet = {
+            userAddress: bytesToPkh(event?.payload[1].bytes),
+            number: event?.payload[0].int,
+          };
+
+          dispatch(potActions.setCurrentBet(pendingBet));
+        }
       }
 
       if (event.tag === 'reveal') {
         dispatch(potActions.setCurrentBet(false));
       }
+
+      if (event.tag === 'win' || event.tag === 'lose') {
+        if (betInProgress?.userAddress === account?.address) {
+          const action =
+            event.tag === 'win' ? potActions.betWin() : potActions.betLost();
+
+          dispatch(action);
+        }
+      }
     });
   }, []);
+
+  useEffect(() => {
+    if (betHistory.length && typeof betHistory[0].outcome === 'undefined') {
+      dispatch(potActions.setCurrentBet(true));
+    }
+  }, [betHistory, dispatch, potActions]);
 
   useEffect(() => {
     const localPotParameters = storageService.getItem<PepePotStatistics>(

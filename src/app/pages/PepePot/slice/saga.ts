@@ -1,5 +1,5 @@
 import { put, takeLatest } from 'redux-saga/effects';
-import { randomBytes } from 'crypto';
+import { randomBytes } from 'crypto-browserify';
 import { pepePotActions as actions } from '.';
 import {
   getContributions,
