@@ -46,23 +46,25 @@ export const PepePot = () => {
   const storageService = new LocalStorageService();
 
   useEffect(() => {
-    const sub = Tezos.stream.subscribeEvent({
-      address: POT_CONTRACT,
-    });
+    if (betInProgress) {
+      const sub = Tezos.stream.subscribeEvent({
+        address: POT_CONTRACT,
+      });
 
-    sub.on('data', event => {
-      if (event.tag === 'win' || event.tag === 'lose') {
-        if (betInProgress?.userAddress === account?.address) {
-          const action =
-            event.tag === 'win' ? potActions.betWin() : potActions.betLost();
+      sub.on('data', event => {
+        if (event.tag === 'win' || event.tag === 'lose') {
+          if (betInProgress?.userAddress === account?.address) {
+            const action =
+              event.tag === 'win' ? potActions.betWin() : potActions.betLost();
 
-          dispatch(action);
+            dispatch(action);
+          }
+
+          dispatch(potActions.setCurrentBet(null));
+          sub.close();
         }
-
-        dispatch(potActions.setCurrentBet(null));
-        sub.close();
-      }
-    });
+      });
+    }
   }, [betInProgress]);
 
   useEffect(() => {
