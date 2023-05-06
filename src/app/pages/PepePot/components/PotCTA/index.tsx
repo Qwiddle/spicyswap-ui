@@ -32,6 +32,8 @@ export const PotCTA = ({
 
   const { burnAmount, betAmount } = stats;
 
+  const potContribution = (((betAmount - burnAmount) / betAmount) * 100) / 2;
+
   const handleButtonClick = () => {
     if (userAccount) {
       if (stats && !betInProgress) {
@@ -68,9 +70,9 @@ export const PotCTA = ({
           <PotButtonContent />
         </PotCTAButton>
         <span>
-          If you lose, {((betAmount - burnAmount) / betAmount) * 100}% of your
-          $PEPE are added to the pot, and {(burnAmount / betAmount) * 100}% is
-          burned.
+          If you lose, {(burnAmount / betAmount) * 100}% of your $PEPE is
+          burned, {potContribution}% is added to the pot, and {potContribution}%
+          goes to house reserves.
         </span>
       </PotCTAAction>
     </PotCTAContainer>
