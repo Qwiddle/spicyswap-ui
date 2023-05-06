@@ -4,23 +4,21 @@ import { PotStatistics as PotStatisticsContainer } from './styles';
 import { PepePotStatistics } from '../../types';
 
 export const PotStatistics = ({ stats }: { stats: PepePotStatistics }) => {
+  const { totalWagered, currentOdds, burnAmount, daoAmount } = stats;
+
   return (
     <PotStatisticsContainer>
       <PotStatisticsItem>
         <Bold>Odds</Bold>
-        <Bold>{`${stats.currentOdds.toFixed(2)}%`}</Bold>
+        <Bold>{currentOdds && `${currentOdds.toFixed(2)}%`}</Bold>
       </PotStatisticsItem>
       <PotStatisticsItem>
         <Bold>Wagered</Bold>
-        <Bold>{stats.totalWagered.toLocaleString('en-US')}</Bold>
+        <Bold>{totalWagered && totalWagered.toLocaleString('en-US')}</Bold>
       </PotStatisticsItem>
       <PotStatisticsItem>
         <Bold>Burned</Bold>
-        <Bold>{stats.burnAmount.toLocaleString('en-US')}</Bold>
-      </PotStatisticsItem>
-      <PotStatisticsItem>
-        <Bold>DAO</Bold>
-        <Bold>{stats.daoAmount.toLocaleString('en-US')}</Bold>
+        <Bold>{burnAmount ? burnAmount.toLocaleString('en-US') : 0}</Bold>
       </PotStatisticsItem>
     </PotStatisticsContainer>
   );

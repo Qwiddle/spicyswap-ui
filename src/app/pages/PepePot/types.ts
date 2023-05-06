@@ -4,6 +4,7 @@ export interface PepePotStatistics {
   currentOdds: number;
   currentPot: number;
   totalWagered: number;
+  betAmount: number;
 }
 
 export interface PepePotBetHistory {

@@ -27,10 +27,10 @@ export const getPotStatistics = ({ storage }) => {
 
 export const getPotParameters = ({ storage }) => {
   const {
-    settings: { bet_amount, odds_increase },
+    settings: { bet_amount, odds_increase, burn_amount },
   } = storage;
 
-  return { bet_amount, odds_increase };
+  return { bet_amount, odds_increase, burn_amount };
 };
 
 export const getPepePot = async () => {
@@ -74,18 +74,20 @@ export const transformWagered = (transfers: any) => {
 };
 
 export const transformMetrics = (metrics: any) => {
-  const { curr_odds, pot, wagered, oddsIncrease, betAmount } = metrics;
+  const { curr_odds, pot, wagered, odds_increase, bet_amount, burn_amount } =
+    metrics;
   const daoAmount = metrics[PEPE_DAO];
   const burnAmount = metrics[POT_BURNER];
 
   return {
-    burnAmount: rawToBalance(burnAmount, 2),
-    daoAmount: rawToBalance(daoAmount, 2),
+    burnTotal: rawToBalance(burnAmount, 2),
+    daoTotal: rawToBalance(daoAmount, 2),
     currentOdds: rawToBalance(Number(curr_odds), 1),
     currentPot: rawToBalance(Number(pot), 2),
     totalWagered: rawToBalance(wagered, 2),
-    betAmount: rawToBalance(Number(betAmount), 2),
-    oddsIncrease: rawToBalance(Number(oddsIncrease), 1),
+    betAmount: rawToBalance(Number(bet_amount), 2),
+    burnAmount: rawToBalance(Number(burn_amount), 2),
+    oddsIncrease: rawToBalance(Number(odds_increase), 1),
   };
 };
 

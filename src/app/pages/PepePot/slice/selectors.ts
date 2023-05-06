@@ -11,6 +11,7 @@ export const selectStatistics = createSelector(
   [selectDomain],
   pepePotState => ({
     burnAmount: pepePotState.burnAmount,
+    betAmount: pepePotState.betAmount,
     daoAmount: pepePotState.daoAmount,
     currentOdds: pepePotState.currentOdds,
     currentPot: pepePotState.currentPot,
@@ -57,4 +58,9 @@ export const selectBalance = createSelector(
     pepePotState.balance.find(
       b => b.token === `${PEPE_CONTRACT}:${PEPE_TOKEN_ID}`,
     )?.balance,
+);
+
+export const selectLastBetHash = createSelector(
+  [selectDomain],
+  pepePotState => pepePotState.lastBetHash,
 );
