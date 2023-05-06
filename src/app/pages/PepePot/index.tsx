@@ -152,7 +152,7 @@ export const PepePot = () => {
         <PotHeader>Pepe Prize Pot</PotHeader>
         <PotDescription>
           <span>
-            The pot starts with 100,000 $PEPE. When you click the “Bet” button,
+            The pot starts with 15,000 $PEPE. When you click the “Bet” button,
             you bet 2,500 $PEPE to win the pot. The pot will continue to grow
             until someone wins and then it starts over.
           </span>
