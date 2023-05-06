@@ -64,7 +64,9 @@ export const PotCTA = ({
         </PotCTACounter>
       </PotCTAImage>
       <PotCTAAction>
-        <span>Placing a bet will wager 10,000 $PEPE.</span>
+        <span>
+          Placing a bet will wager {betAmount.toLocaleString('en-us')} $PEPE.
+        </span>
         <span>{balance && `PEPE balance: ${balance}`}</span>
         <PotCTAButton onClick={handleButtonClick}>
           <PotButtonContent />
