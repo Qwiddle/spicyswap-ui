@@ -3,7 +3,9 @@ import { Modal } from 'app/components/Modal';
 import { PotModalCard } from './styles';
 import { ConnectButton } from 'app/components/ConnectButton';
 import { usePepePotSlice } from '../../slice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectLastBetHash } from '../../slice/selectors';
+import { truncateMiddle } from 'utils/user-address';
 
 export const PotModal = ({
   show,
@@ -14,6 +16,8 @@ export const PotModal = ({
 }) => {
   const { actions: potActions } = usePepePotSlice();
   const dispatch = useDispatch();
+
+  const lastBetHash = useSelector(selectLastBetHash);
 
   const handleButtonClick = () => {
     dispatch(potActions.resetBet());
@@ -30,6 +34,22 @@ export const PotModal = ({
         <PotModalCard>
           <span>
             {betStatus === 'win' ? 'Winner!' : 'Better luck next time! :('}
+          </span>
+          <span
+            style={{
+              fontSize: '1rem',
+              textDecoration: 'none',
+            }}
+          >
+            Operation:{' '}
+            <a
+              href={`https://ghostnet.tzkt.io/${lastBetHash}`}
+              style={{ color: 'rgb(80,150,36)' }}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {truncateMiddle(lastBetHash, 18)}
+            </a>
           </span>
           <img
             src={imageSource}

@@ -23,6 +23,7 @@ export const initialState: PepePotState = {
   betStatus: 'win',
   currentBet: null,
   balance: [],
+  lastBetHash: '',
 };
 
 const slice = createSlice({
@@ -52,25 +53,34 @@ const slice = createSlice({
     getBets(state) {},
     getParameters(state) {},
     setParameters(state, action: PayloadAction<PepePotStatistics>) {
-      const { burnAmount, daoAmount, currentOdds, currentPot, totalWagered } =
-        action.payload;
+      const {
+        burnAmount,
+        daoAmount,
+        currentOdds,
+        currentPot,
+        totalWagered,
+        betAmount,
+      } = action.payload;
 
       state.burnAmount = burnAmount;
       state.daoAmount = daoAmount;
       state.currentOdds = currentOdds;
       state.currentPot = currentPot;
       state.totalWagered = totalWagered;
+      state.betAmount = betAmount;
     },
     setBetHistory(state, action: PayloadAction<PepePotBetHistory[]>) {
       state.betHistory = action.payload;
     },
-    betLost(state) {
+    betLost(state, action: PayloadAction<{ opHash: string }>) {
       state.betFinished = true;
       state.betStatus = 'lose';
+      state.lastBetHash = action.payload.opHash;
     },
-    betWin(state) {
+    betWin(state, action: PayloadAction<{ opHash: string }>) {
       state.betFinished = true;
       state.betStatus = 'win';
+      state.lastBetHash = action.payload.opHash;
     },
     resetBet(state) {
       state.betFinished = false;

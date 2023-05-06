@@ -17,4 +17,5 @@ export interface PepePotState {
   betStatus: 'win' | 'lose' | '';
   currentBet: PepePotBet | null;
   balance: TokenBalance[];
+  lastBetHash: string;
 }
