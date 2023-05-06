@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/spicyswap-ui/static/css/main.f51d5156.css",
-    "main.js": "/spicyswap-ui/static/js/main.8ff5c4b6.js",
+    "main.js": "/spicyswap-ui/static/js/main.0e784914.js",
     "static/js/886.b01248f3.chunk.js": "/spicyswap-ui/static/js/886.b01248f3.chunk.js",
-    "static/js/953.f9aee267.chunk.js": "/spicyswap-ui/static/js/953.f9aee267.chunk.js",
+    "static/js/953.3e2f6f99.chunk.js": "/spicyswap-ui/static/js/953.3e2f6f99.chunk.js",
     "static/js/27.601ad6b1.chunk.js": "/spicyswap-ui/static/js/27.601ad6b1.chunk.js",
     "static/js/746.20cfd538.chunk.js": "/spicyswap-ui/static/js/746.20cfd538.chunk.js",
     "static/media/pepeinpot.png": "/spicyswap-ui/static/media/pepeinpot.49f255cd901f5c253bdf.png",
@@ -12,6 +12,6 @@
   },
   "entrypoints": [
     "static/css/main.f51d5156.css",
-    "static/js/main.8ff5c4b6.js"
+    "static/js/main.0e784914.js"
   ]
 }
