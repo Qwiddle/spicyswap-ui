@@ -4,7 +4,7 @@ import { PotStatistics as PotStatisticsContainer } from './styles';
 import { PepePotStatistics } from '../../types';
 
 export const PotStatistics = ({ stats }: { stats: PepePotStatistics }) => {
-  const { totalWagered, currentOdds, burnAmount, daoAmount } = stats;
+  const { totalWagered, currentOdds, burnTotal, daoAmount } = stats;
 
   return (
     <PotStatisticsContainer>
@@ -18,7 +18,7 @@ export const PotStatistics = ({ stats }: { stats: PepePotStatistics }) => {
       </PotStatisticsItem>
       <PotStatisticsItem>
         <Bold>Burned</Bold>
-        <Bold>{burnAmount ? burnAmount.toLocaleString('en-US') : 0}</Bold>
+        <Bold>{burnTotal ? burnTotal.toLocaleString('en-US') : 0}</Bold>
       </PotStatisticsItem>
     </PotStatisticsContainer>
   );

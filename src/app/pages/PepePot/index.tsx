@@ -145,7 +145,7 @@ export const PepePot = () => {
         <title>Prize Pot</title>
         <meta
           name="description"
-          content="The pot starts with 75,000 $PEPE. Each bet that goes in increases the pot by 10,000 $PEPE. The pot will continue to grow until someone wins and then it starts over."
+          content="The pot starts with 15,000 $PEPE. Each bet that goes in increases the pot by 25,000 $PEPE. The pot will continue to grow until someone wins and then it starts over."
         />
       </Helmet>
       <Content>

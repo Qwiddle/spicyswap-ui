@@ -11,6 +11,7 @@ export const selectStatistics = createSelector(
   [selectDomain],
   pepePotState => ({
     burnAmount: pepePotState.burnAmount,
+    burnTotal: pepePotState.burnTotal,
     betAmount: pepePotState.betAmount,
     daoAmount: pepePotState.daoAmount,
     currentOdds: pepePotState.currentOdds,

@@ -7,6 +7,7 @@ export interface PepePotState {
   daoAmount: number;
   potAmount: number;
   burnAmount: number;
+  burnTotal: number;
   oddsIncrease: number;
   currentOdds: number;
   currentPot: number;

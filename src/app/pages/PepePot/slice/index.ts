@@ -13,6 +13,7 @@ export const initialState: PepePotState = {
   daoAmount: 0,
   potAmount: 0,
   burnAmount: 0,
+  burnTotal: 0,
   oddsIncrease: 0,
   currentOdds: 0,
   currentPot: 0,
@@ -60,9 +61,11 @@ const slice = createSlice({
         currentPot,
         totalWagered,
         betAmount,
+        burnTotal,
       } = action.payload;
 
       state.burnAmount = burnAmount;
+      state.burnTotal = burnTotal;
       state.daoAmount = daoAmount;
       state.currentOdds = currentOdds;
       state.currentPot = currentPot;
