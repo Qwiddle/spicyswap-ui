@@ -51,13 +51,12 @@ export const PepePot = () => {
         address: POT_CONTRACT,
       });
 
-      sub.on('data', event => {
+      sub.on('data', (event: any) => {
         if (event.tag === 'win' || event.tag === 'lose') {
           if (betInProgress?.userAddress === account?.address) {
             const action =
-              event.tag === 'win' ? potActions.betWin() : potActions.betLost();
-
-            dispatch(action);
+              event.tag === 'win' ? potActions.betWin : potActions.betLost;
+            dispatch(action({ opHash: event.opHash }));
           }
 
           dispatch(potActions.setCurrentBet(null));
@@ -82,6 +81,10 @@ export const PepePot = () => {
             }),
           );
         }
+      }
+
+      if (event.tag === 'reveal') {
+        dispatch(potActions.setCurrentBet(null));
       }
     });
   }, [account]);
@@ -149,8 +152,8 @@ export const PepePot = () => {
         <PotHeader>Pepe Prize Pot</PotHeader>
         <PotDescription>
           <span>
-            The pot starts with 75,000 $PEPE. When you click the “Bet” button,
-            you bet 10,000 $PEPE to win the pot. The pot will continue to grow
+            The pot starts with 100,000 $PEPE. When you click the “Bet” button,
+            you bet 2,500 $PEPE to win the pot. The pot will continue to grow
             until someone wins and then it starts over.
           </span>
         </PotDescription>
