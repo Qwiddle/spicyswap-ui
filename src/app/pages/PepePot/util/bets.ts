@@ -18,6 +18,7 @@ export const getPotBets = async () => {
     return {
       ...storageWithoutLevel,
       pot: history[indexOfStorage + 1]?.pot || 0,
+      odds: history[indexOfStorage + 1]?.odds || 0,
       account: bet.value.player,
       outcome:
         bet.value.outcome === null
