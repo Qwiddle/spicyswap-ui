@@ -30,6 +30,8 @@ export const PotCTA = ({
 
   const { actions: potActions } = usePepePotSlice();
 
+  const { burnAmount, betAmount } = stats;
+
   const handleButtonClick = () => {
     if (userAccount) {
       if (stats && !betInProgress) {
@@ -66,8 +68,9 @@ export const PotCTA = ({
           <PotButtonContent />
         </PotCTAButton>
         <span>
-          If you lose, 75% of your $PEPE are added to the pot, 12.5% is put into
-          the DAO and 12.5% is burned.
+          If you lose, {((betAmount - burnAmount) / betAmount) * 100}% of your
+          $PEPE are added to the pot, and {(burnAmount / betAmount) * 100}% is
+          burned.
         </span>
       </PotCTAAction>
     </PotCTAContainer>
