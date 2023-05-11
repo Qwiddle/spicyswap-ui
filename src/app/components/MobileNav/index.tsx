@@ -1,4 +1,4 @@
-import { UilUsdCircle, UilNotebooks } from '@iconscout/react-unicons';
+import { UilUsdCircle, UilFlaskPotion } from '@iconscout/react-unicons';
 import { OnlineIndicator } from '../OnlineIndicator';
 import {
   MobileNavCloseIcon,
@@ -31,16 +31,16 @@ export function MobileNav({
 
   const pages: NavPage[] = [
     {
-      url: '#',
-      name: 'swap',
-      alt: '',
-      icon: <UilUsdCircle />,
+      url: '/pot',
+      name: 'PepePot',
+      alt: 'Pepe Pot Page',
+      icon: <UilFlaskPotion />,
     },
     {
-      url: '#',
-      name: 'learn',
-      alt: '',
-      icon: <UilNotebooks />,
+      url: '/swap',
+      name: 'Swap',
+      alt: 'Swap Page',
+      icon: <UilUsdCircle />,
     },
   ];
 
