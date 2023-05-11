@@ -24,13 +24,13 @@ export const DAPP_NAME: string = 'PepeSwap';
 export const DAPP_ICON_URL: string =
   'https://bafybeigqka2ynrib6ytxku3nvakork5smsxni5xdqro56kd7ecsfos7z7a.ipfs.dweb.link/';
 
-export const DEFAULT_RPC: string = 'https://mainnet.tezos.marigold.dev/';
+export const DEFAULT_RPC: string = 'https://mainnet.api.tez.ie';
 export const DEFAULT_NETWORK_TYPE: NetworkType = NetworkType.MAINNET;
 export const GHOSTNET: NetworkType = NetworkType.GHOSTNET;
 export const MAINNET: NetworkType = NetworkType.MAINNET;
 
 export const DEFAULT_RPCS: Partial<Record<NetworkType, string>> = {
-  mainnet: 'https://mainnet.tezos.marigold.dev/',
+  mainnet: 'https://mainnet.api.tez.ie',
   ghostnet: 'https://ghostnet.tezos.marigold.dev/',
 };
 
