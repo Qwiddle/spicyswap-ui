@@ -47,7 +47,7 @@ export const getPepePot = async () => {
 
 export const getContributions = async () => {
   const requestUrl = `
-    ${TZKT_API_URL}tokens/transfers?from=${POT_CONTRACT}&to.in=${PEPE_DAO},${POT_BURNER}&token.contract=${PEPE_CONTRACT}
+    ${TZKT_API_URL}tokens/transfers?from=${POT_CONTRACT}&to.in=${PEPE_DAO},${POT_BURNER}&token.contract=${PEPE_CONTRACT}&limit=1000&select=amount,to.address
   `;
 
   const res = await fetch(requestUrl);
@@ -58,7 +58,7 @@ export const getContributions = async () => {
 
 export const getWagered = async () => {
   const requestUrl = `
-    ${TZKT_API_URL}tokens/transfers?to=${POT_CONTRACT}&token.contract=${PEPE_CONTRACT}&limit=1000
+    ${TZKT_API_URL}tokens/transfers?to=${POT_CONTRACT}&token.contract=${PEPE_CONTRACT}&limit=1000&select=amount
   `;
 
   const res = await fetch(requestUrl);
@@ -69,7 +69,7 @@ export const getWagered = async () => {
 
 export const transformWagered = (transfers: any) => {
   return transfers.reduce((acc, curr) => {
-    return acc + Number(curr.amount);
+    return acc + Number(curr);
   }, 0);
 };
 
@@ -93,10 +93,7 @@ export const transformMetrics = (metrics: any) => {
 
 export const transformContributions = (transfers: any) => {
   return transfers.reduce((acc, curr) => {
-    const {
-      to: { address: contract },
-      amount,
-    } = curr;
+    const { 'to.address': contract, amount } = curr;
 
     if (!acc[contract]) {
       acc[contract] = Number(amount);
