@@ -28,7 +28,7 @@ export function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<PepePot />} />
-        <Route path="/pot" element={<Swap />} />
+        <Route path="/swap" element={<Swap />} />
         <Route path="*" element={<PepePot />} />
       </Routes>
       <GlobalStyle />
