@@ -67,7 +67,7 @@ export const PotCTA = ({
         <span>
           Placing a bet will wager {betAmount.toLocaleString('en-us')} $PEPE.
         </span>
-        <span>{balance && `PEPE balance: ${balance}`}</span>
+        <span>{balance ? `PEPE balance: ${balance}` : ``}</span>
         <PotCTAButton onClick={handleButtonClick}>
           <PotButtonContent />
         </PotCTAButton>
