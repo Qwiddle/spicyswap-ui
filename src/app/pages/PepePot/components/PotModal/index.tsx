@@ -43,7 +43,7 @@ export const PotModal = ({
           >
             Operation:{' '}
             <a
-              href={`https://ghostnet.tzkt.io/${lastBetHash}`}
+              href={`https://tzkt.io/${lastBetHash}`}
               style={{ color: 'rgb(80,150,36)' }}
               target="_blank"
               rel="noreferrer"

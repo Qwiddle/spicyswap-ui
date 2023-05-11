@@ -12,10 +12,10 @@ export const TZKT_API_GHOSTNET_URL: string = 'https://api.ghostnet.tzkt.io/v1/';
 export const SPICY_ROUTER: string = 'KT1PwoZxyv4XkPEGnTqWYvjA1UYiPTgAGyqL';
 export const WTZ_CONTRACT: string = 'KT1Pyd1r9F4nMaHy8pPZxPSq6VCn9hVbVrf4';
 export const WTZ_TOKEN: string = 'KT1PnUZCp3u2KzWr93pn4DD7HAJnm3rWVrgn';
-export const POT_CONTRACT: string = 'KT1XjCiC8aEfS9AgyXvPejZvWTJnP8eGUs5h';
+export const POT_CONTRACT: string = 'KT1PL7hfBVCvWn5bHJnxRUaixGJWD8UxYw2W';
 export const POT_BURNER: string = 'KT1CZMurPAjSfZqcn6LBUNUhG4byE6AJgDT6';
 export const PEPE_DAO: string = 'KT1LyPqdRVBFdQvhjyybG5osRCXnGSrk15M5';
-export const PEPE_CONTRACT: string = 'KT1D5uTxZZ7NEjR7jD4eyYdL2iGGUWfpqms5';
+export const PEPE_CONTRACT: string = 'KT1MZg99PxMDEENwB4Fi64xkqAVh5d1rv8Z9';
 export const PEPE_TOKEN_ID: number = 0;
 
 export const HOUSE_BOT: string = 'tz1N2fc1nAvY9uRwAqBSF76pNUR4i8R99jzX';
@@ -27,6 +27,7 @@ export const DAPP_ICON_URL: string =
 export const DEFAULT_RPC: string = 'https://mainnet.api.tez.ie';
 export const DEFAULT_NETWORK_TYPE: NetworkType = NetworkType.MAINNET;
 export const GHOSTNET: NetworkType = NetworkType.GHOSTNET;
+export const MAINNET: NetworkType = NetworkType.MAINNET;
 
 export const DEFAULT_RPCS: Partial<Record<NetworkType, string>> = {
   mainnet: 'https://mainnet.api.tez.ie',
@@ -41,7 +42,7 @@ export const dappOptions: DAppClientOptions = {
 
 export const pepePotDappOptions: DAppClientOptions = {
   iconUrl: DAPP_ICON_URL,
-  preferredNetwork: NetworkType.GHOSTNET,
+  preferredNetwork: NetworkType.MAINNET,
   name: 'Pepe Pot',
 };
 

@@ -12,7 +12,7 @@ import {
   PEPE_CONTRACT,
   PEPE_TOKEN_ID,
   POT_CONTRACT,
-  TZKT_API_GHOSTNET_URL,
+  TZKT_API_URL,
 } from 'app/common/const';
 import { getPotBets } from '../util/bets';
 import {
@@ -115,7 +115,7 @@ export function* getTokenBalance({
     const tokenContract = token.split(':')[0];
     const tokenId = token.split(':')[1] === 'null' ? 0 : token.split(':')[1];
 
-    const requestURL = `${TZKT_API_GHOSTNET_URL}tokens/balances?account=${userAddress}&token.contract=${tokenContract}&token.tokenId=${tokenId}`;
+    const requestURL = `${TZKT_API_URL}tokens/balances?account=${userAddress}&token.contract=${tokenContract}&token.tokenId=${tokenId}`;
 
     const balances = yield call(request, requestURL);
     const balance = rawToBalance(Number(balances[0]?.balance), 2) || 0;

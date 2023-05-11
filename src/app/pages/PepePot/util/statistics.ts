@@ -3,12 +3,12 @@ import {
   PEPE_DAO,
   POT_BURNER,
   POT_CONTRACT,
-  TZKT_API_GHOSTNET_URL,
+  TZKT_API_URL,
 } from 'app/common/const';
 import { rawToBalance } from 'utils/spicy';
 
 export const getPotStorage = async () => {
-  const requestUrl = `${TZKT_API_GHOSTNET_URL}contracts/${POT_CONTRACT}/storage`;
+  const requestUrl = `${TZKT_API_URL}contracts/${POT_CONTRACT}/storage`;
 
   const res = await fetch(requestUrl);
   const storage = await res.json();
@@ -47,7 +47,7 @@ export const getPepePot = async () => {
 
 export const getContributions = async () => {
   const requestUrl = `
-    ${TZKT_API_GHOSTNET_URL}tokens/transfers?from=${POT_CONTRACT}&to.in=${PEPE_DAO},${POT_BURNER}&token.contract=${PEPE_CONTRACT}
+    ${TZKT_API_URL}tokens/transfers?from=${POT_CONTRACT}&to.in=${PEPE_DAO},${POT_BURNER}&token.contract=${PEPE_CONTRACT}
   `;
 
   const res = await fetch(requestUrl);
@@ -58,7 +58,7 @@ export const getContributions = async () => {
 
 export const getWagered = async () => {
   const requestUrl = `
-    ${TZKT_API_GHOSTNET_URL}tokens/transfers?to=${POT_CONTRACT}&token.contract=${PEPE_CONTRACT}&limit=1000
+    ${TZKT_API_URL}tokens/transfers?to=${POT_CONTRACT}&token.contract=${PEPE_CONTRACT}&limit=1000
   `;
 
   const res = await fetch(requestUrl);

@@ -60,7 +60,7 @@ export const PotTable = ({ rows }: { rows: PepePotBetHistory[] }) => {
               </td>
               <td className="table__transaction u-text-right">
                 <a
-                  href={`https://ghostnet.tzkt.io/${op.operation}`}
+                  href={`https://tzkt.io/${op.operation}`}
                   target="_blank"
                   rel="noreferrer"
                 >

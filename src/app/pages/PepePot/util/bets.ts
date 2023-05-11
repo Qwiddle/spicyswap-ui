@@ -1,8 +1,8 @@
-import { POT_CONTRACT, TZKT_API_GHOSTNET_URL } from 'app/common/const';
+import { POT_CONTRACT, TZKT_API_URL } from 'app/common/const';
 import { rawToBalance } from 'utils/spicy';
 
 export const getPotBets = async () => {
-  const requestUrl = `${TZKT_API_GHOSTNET_URL}contracts/${POT_CONTRACT}/bigmaps/bets/keys?sort.desc=lastLevel&limit=10`;
+  const requestUrl = `${TZKT_API_URL}contracts/${POT_CONTRACT}/bigmaps/bets/keys?sort.desc=lastLevel&limit=10`;
 
   const res = await fetch(requestUrl);
   const bets = await res.json();
@@ -31,7 +31,7 @@ export const getPotBets = async () => {
 };
 
 export const getPotStorageHistory = async () => {
-  const requestUrl = `${TZKT_API_GHOSTNET_URL}contracts/${POT_CONTRACT}/storage/history?limit=25`;
+  const requestUrl = `${TZKT_API_URL}contracts/${POT_CONTRACT}/storage/history?limit=25`;
   const res = await fetch(requestUrl);
   const history = await res.json();
 
