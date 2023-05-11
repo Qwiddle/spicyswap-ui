@@ -1,5 +1,5 @@
 import { memo, useCallback } from 'react';
-import type { Container, Engine } from 'tsparticles-engine';
+import type { Engine } from 'tsparticles-engine';
 import Particles from 'react-particles';
 import { loadFull } from 'tsparticles';
 

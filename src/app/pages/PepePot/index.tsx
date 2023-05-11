@@ -9,7 +9,6 @@ import {
   selectBetHistory,
   selectBetStatus,
   selectIsBetFinished,
-  selectIsPending,
   selectStatistics,
 } from './slice/selectors';
 import { useEffect } from 'react';
@@ -56,6 +55,7 @@ export const PepePot = () => {
           if (betInProgress?.userAddress === account?.address) {
             const action =
               event.tag === 'win' ? potActions.betWin : potActions.betLost;
+
             dispatch(action({ opHash: event.opHash }));
           }
 
@@ -64,30 +64,28 @@ export const PepePot = () => {
         }
       });
     }
-  }, [betInProgress]);
+  }, [betInProgress, account, dispatch, potActions]);
 
   useEffect(() => {
-    const sub = Tezos.stream.subscribeEvent({
-      address: POT_CONTRACT,
-    });
+    if (account) {
+      const sub = Tezos.stream.subscribeEvent({
+        address: POT_CONTRACT,
+      });
 
-    sub.on('data', event => {
-      if (event.tag === 'bet') {
-        if (event?.payload) {
-          dispatch(
-            potActions.setCurrentBet({
-              userAddress: bytesToPkh(event?.payload[1].bytes),
-              number: event?.payload[0].int,
-            }),
-          );
+      sub.on('data', event => {
+        if (event.tag === 'bet') {
+          if (event?.payload) {
+            dispatch(
+              potActions.setCurrentBet({
+                userAddress: bytesToPkh(event?.payload[1].bytes),
+                number: event?.payload[0].int,
+              }),
+            );
+          }
         }
-      }
-
-      if (event.tag === 'reveal') {
-        dispatch(potActions.setCurrentBet(null));
-      }
-    });
-  }, [account]);
+      });
+    }
+  }, [account, dispatch, potActions]);
 
   useEffect(() => {
     if (betHistory.length && typeof betHistory[0].outcome === 'undefined') {
@@ -128,7 +126,7 @@ export const PepePot = () => {
         }),
       );
     }
-  }, [account]);
+  }, [account, dispatch, potActions]);
 
   useEffect(() => {
     const refetchStatTimer = setInterval(

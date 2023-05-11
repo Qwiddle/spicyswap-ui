@@ -10,7 +10,7 @@ import {
 } from './styles';
 import pot from './assets/pot.svg';
 import pepeInPot from './assets/pepeinpot.png';
-import { PepePotStatistics, TokenBalance } from '../../types';
+import { PepePotStatistics } from '../../types';
 import { walletActions } from 'app/slice/wallet';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectBetInProgress } from '../../slice/selectors';

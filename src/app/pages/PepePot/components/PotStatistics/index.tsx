@@ -4,7 +4,7 @@ import { PotStatistics as PotStatisticsContainer } from './styles';
 import { PepePotStatistics } from '../../types';
 
 export const PotStatistics = ({ stats }: { stats: PepePotStatistics }) => {
-  const { totalWagered, currentOdds, burnTotal, daoAmount } = stats;
+  const { totalWagered, currentOdds, burnTotal } = stats;
 
   return (
     <PotStatisticsContainer>
