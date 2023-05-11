@@ -43,7 +43,12 @@ export const PotTable = ({ rows }: { rows: PepePotBetHistory[] }) => {
           {rows.map((op, index) => (
             <tr key={`tr-${index}`}>
               <td className="table__account">
-                <a href="/" className="table__account-content table__link">
+                <a
+                  href={`https://tzkt.io/${op.account}`}
+                  target="_blank"
+                  className="table__account-content table__link"
+                  rel="noreferrer"
+                >
                   <span className="table__account-name">
                     {truncateMiddle(op.account, 12)}
                   </span>
