@@ -27,9 +27,9 @@ export function App() {
       </Helmet>
       <NavBar />
       <Routes>
-        <Route path="/" element={<Swap />} />
-        <Route path="/pot" element={<PepePot />} />
-        <Route path="*" element={<Swap />} />
+        <Route path="/" element={<PepePot />} />
+        <Route path="/pot" element={<Swap />} />
+        <Route path="*" element={<PepePot />} />
       </Routes>
       <GlobalStyle />
     </BrowserRouter>
