@@ -47,7 +47,7 @@ export const getPepePot = async () => {
 
 export const getContributions = async () => {
   const requestUrl = `
-    ${TZKT_API_URL}tokens/transfers?from=${POT_CONTRACT}&to.in=${PEPE_DAO},${POT_BURNER}&token.contract=${PEPE_CONTRACT}&limit=1000&select=amount,to.address
+    ${TZKT_API_URL}tokens/transfers?from=${POT_CONTRACT}&to.in=${PEPE_DAO},${POT_BURNER}&token.contract=${PEPE_CONTRACT}&limit=10000&select=amount,to.address
   `;
 
   const res = await fetch(requestUrl);
@@ -58,7 +58,7 @@ export const getContributions = async () => {
 
 export const getWagered = async () => {
   const requestUrl = `
-    ${TZKT_API_URL}tokens/transfers?to=${POT_CONTRACT}&token.contract=${PEPE_CONTRACT}&limit=1000&select=amount
+    ${TZKT_API_URL}tokens/transfers?to=${POT_CONTRACT}&token.contract=${PEPE_CONTRACT}&limit=10000&select=amount
   `;
 
   const res = await fetch(requestUrl);
